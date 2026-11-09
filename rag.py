@@ -28,7 +28,7 @@ def answer(question: str, k: int = 4) -> dict:
     relevant = [c for c in chunks if c["distance"] <= MAX_DISTANCE]
 
     if not relevant:
-        return {"answer": "I don't know based on the documentation.", "sources": []}
+        return {"answer": "I don't know based on the documentation.", "sources": [], "context": ""}
 
     response = client.chat.completions.create(
         model=CHAT_MODEL,
@@ -45,6 +45,7 @@ def answer(question: str, k: int = 4) -> dict:
     return {
         "answer": response.choices[0].message.content,
         "sources": sorted({c["source"] for c in relevant}),
+        "context": build_context(relevant),
     }
 
 
