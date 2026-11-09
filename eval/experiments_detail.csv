@@ -1,0 +1,2207 @@
+﻿config,id,answerable,refused,by_filter,hit,correct,faithful,latency,tokens_in,tokens_out,answer
+150w_k3,q01,True,False,False,True,True,True,2.5780116000096314,766,75,"You can run a Python tool without installing it using the `uvx` command. For example, to run `ruff`, you would use the command: ```console $ uvx ruff ``` This command is equivalent to `uv tool run ruff` and installs the tool's dependencies in a temporary virtual environment isolated from the current project. [concepts__tools.md]"
+150w_k3,q02,True,True,False,True,False,,0.8415816999913659,1146,8,I don't know based on the documentation.
+150w_k3,q03,True,True,False,False,False,,1.0056106000265572,857,8,I don't know based on the documentation.
+150w_k3,q04,True,False,False,True,True,True,1.9559354000084568,813,77,"You can increment the minor version of your package using the `--bump` option with the command: 
+
+```console
+$ uv version --bump minor hello-world 1.2.3 => 1.3.0
+```
+
+This will change the version from 1.2.3 to 1.3.0. [guides__package.md]"
+150w_k3,q05,True,False,False,True,True,True,3.3330739999946672,882,113,"To specify a specific version of a package when using uv to run a command, use the `command@<version>` syntax. For example: 
+
+```console
+$ uvx ruff@0.3.0 check
+```
+
+You can also use the `--from` option to specify package versions, like this:
+
+```console
+$ uvx --from 'ruff==0.3.0' ruff check
+```
+
+Note that the `@` syntax cannot be used for anything other than an exact version [guides__tools.md]."
+150w_k3,q06,True,False,False,True,True,True,2.958834300021408,867,114,"At the project level, uv looks for a `pyproject.toml` or `uv.toml` file in the current directory or in the nearest parent directory. User-level configurations are found in files like `~/.config/uv/uv.toml` on macOS and Linux, or `%PROGRAMDATA%\uv\uv.toml` on Windows. The key difference is that for `tool` commands operating at the user level, local configuration files are ignored, and uv exclusively reads from user-level and system-level configurations instead [concepts__configuration-files.md]."
+150w_k3,q07,True,False,False,True,True,True,1.3364931999822147,772,107,"uv allows upgrading Python versions it manages to the latest supported patch release using the `python upgrade` command. It does not allow upgrading across minor Python versions. After an upgrade, uv will prefer the new version but retain the existing version for use in virtual environments. Virtual environments will be automatically upgraded to the new patch version unless they were created with an explicitly requested patch version. Upgrades are only supported for uv-managed Python versions, not for PyPy, GraalPy, and Pyodide [concepts__python-versions.md]."
+150w_k3,q08,True,False,False,True,True,True,2.520175899990136,851,141,"In the uv package manager, configuration precedence works as follows:
+
+1. Settings provided via command line take the highest precedence.
+2. Environment variables take precedence over persistent configuration.
+3. Project-level configuration takes precedence over user-level configuration.
+4. User-level configuration takes precedence over system-level configuration.
+
+If multiple configuration files are found, the settings will be merged, with project-level settings appearing earlier in the merged array. If an array is present in both project and user-level configurations, the arrays will be concatenated, with project-level settings appearing first. If multiple system-level configuration files are found, only the first-discovered file will be used, with XDG taking priority [concepts__configuration-files.md]."
+150w_k3,q09,True,False,False,True,True,True,4.26287589999265,962,259,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file. [getting-started__installation.md]"
+150w_k3,q10,True,False,False,True,True,True,2.852552900003502,827,114,"uv provides the following options to control the installation of projects and packages during synchronization:
+
+- `--no-install-project`: Do not install the current project.
+- `--no-install-workspace`: Do not install any workspace members, including the root project.
+- `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the given package(s).
+
+These options allow for selective installation while still ensuring that all dependencies of the target are installed. However, improper use of these flags can lead to a broken environment due to missing dependencies [concepts__projects__sync.md]."
+150w_k3,q11,True,False,False,True,True,True,1.3430594000092242,942,36,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution [concepts__build-backend.md]."
+150w_k3,q12,True,False,False,True,True,True,1.8934983999934047,791,58,"If uv rejects a package that `pip` would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+150w_k3,q13,True,True,False,True,False,,0.9129477000096813,909,8,I don't know based on the documentation.
+150w_k3,q14,True,False,False,True,False,True,4.2537044000055175,865,108,"To run a script that requires an external package using the uv package manager, you need to ensure that the required dependencies are declared. You can do this by using a project with a `pyproject.toml`, inline metadata, or by requesting dependencies per invocation. When you run the script, uv will create an environment on-demand to manage these dependencies. For example, you can run your script with the command:
+
+```console
+$ uv run example.py
+```
+
+Make sure to declare any necessary dependencies beforehand [guides__scripts.md]."
+150w_k3,q15,True,False,False,True,True,True,3.518339100002777,823,163,"To configure uv to use a private package index instead of the default PyPI, you can add an entry to your `pyproject.toml` file under `[[tool.uv.index]]`. Here’s an example configuration:
+
+```toml
+[[tool.uv.index]]
+name = ""your-private-index-name""
+url = ""https://your-private-index-url""
+```
+
+Additionally, you can set `default = true` on this index entry to exclude PyPI from the list of indexes:
+
+```toml
+[[tool.uv.index]]
+name = ""your-private-index-name""
+url = ""https://your-private-index-url""
+default = true
+```
+
+This will make your private index the default for package resolution, and PyPI will not be consulted unless specified otherwise. [concepts__indexes.md]"
+150w_k3,q16,True,False,False,True,True,True,2.083006300003035,800,74,"You can test that the package can be installed and imported with `uv run` using the following command: 
+
+```console
+$ uv run --with <PACKAGE> --no-project -- python -c ""import <PACKAGE>""
+```
+
+The `--no-project` flag is used to avoid installing the package from your local project directory. [guides__package.md]"
+150w_k3,q18,True,False,False,True,True,True,2.4455630999873392,860,110,"When installing a project alongside requirements in a Dockerfile using the uv package manager, it is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s how you can do it:
+
+```dockerfile
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+COPY . .
+RUN uv pip install -e .
+``` [guides__integration__docker.md]"
+150w_k3,q19,True,False,False,True,True,True,1.637864599993918,890,84,"You can add a local package dependency using uv by using the `--editable` flag. For example, you can run the following command: 
+
+```console
+$ uv add --editable ./path/foo
+```
+
+If you want to opt-out of using an editable dependency, you can use:
+
+```console
+$ uv add --no-editable ./path/foo
+``` 
+
+[concepts__projects__dependencies.md]"
+150w_k3,q20,True,False,False,True,True,True,1.9536865000263788,733,55,"You can clear the cache for a specific package in uv by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would use `uv cache clean ruff` [concepts__cache.md]."
+150w_k3,q21,True,False,False,True,True,True,2.2303692999994382,879,90,"uv can export a lockfile to three formats: `requirements.txt`, `pylock.toml`, and `CycloneDX`. You can specify the desired format using the `--format` flag in the export command, like this:
+
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` [concepts__projects__export.md]"
+150w_k3,q22,True,False,False,True,True,True,2.4805573000048753,814,82,"uv allows for the use of `tool.uv.dependency-metadata` to override the declared metadata of a specific package when the metadata is incorrect or incomplete. This can also be used when a package is not available in the package index. By declaring metadata upfront, uv can resolve the package without needing to build it from source, which is beneficial for performance and compatibility across platforms [concepts__resolution.md]."
+150w_k3,q23,True,False,False,True,False,True,1.1145714999875054,754,30,You can list all installed Python versions using the command: ```console $ uv python list --only-installed ``` [concepts__python-versions.md]
+150w_k3,q24,True,False,False,True,True,True,2.491842599993106,978,104,"uv provides support for legacy setuptools scripts on Windows, specifically for scripts with the `.ps1`, `.cmd`, and `.bat` extensions. These scripts are installed in `.venv\Scripts`. When running a Command Prompt script, you can use the command `uv run --with <tool> -- <script>` without needing to specify the extension, as uv will automatically look for files with those extensions in the order of `.ps1`, `.cmd`, and `.bat` [concepts__projects__run.md]."
+150w_k3,q25,True,False,False,True,True,True,2.5364536000124644,856,101,"Workspaces in uv provide several benefits for developing interconnected packages:
+
+1. They organize large codebases by splitting them into multiple packages with common dependencies.
+2. They share a single lockfile, ensuring that the workspace operates with a consistent set of dependencies.
+3. Commands like `uv lock` operate on the entire workspace at once, while `uv run` and `uv sync` operate on the workspace root by default, allowing for streamlined management of multiple packages [concepts__projects__workspaces.md]."
+150w_k3,q26,True,False,False,True,True,True,2.3190182000107598,1416,43,"uv provides two types of Docker images: distroless images, which contain only the uv binaries, and derived images, which include an operating system with uv pre-installed. [guides__integration__docker.md]"
+150w_k3,q27,True,False,False,True,True,True,2.235803199990187,791,100,"uv provides the following commands for managing Python versions:
+
+- `uv python install`: Install Python versions.
+- `uv python list`: View available Python versions.
+- `uv python find`: Find an installed Python version.
+- `uv python pin`: Pin the current project to use a specific Python version.
+- `uv python uninstall`: Uninstall a Python version. 
+
+See the [guide on installing Python](../guides/install-python.md) to get started. [getting-started__features.md]"
+150w_k3,q28,True,False,False,True,True,True,2.1208999999798834,805,103,"You can create a new Python project using the `uv init` command. For example, you can run the following commands:
+
+```console
+$ uv init hello-world
+$ cd hello-world
+```
+
+Alternatively, you can initialize a project in the working directory by running:
+
+```console
+$ mkdir hello-world
+$ cd hello-world
+$ uv init
+```
+
+This will create the necessary files and directories for your project, including a `pyproject.toml` file. [guides__projects.md]"
+150w_k3,q29,True,False,False,True,True,True,1.2398936000245158,780,41,You can check if your lockfile is up-to-date by passing the `--check` flag to `uv lock`: ```console $ uv lock --check ``` [concepts__projects__sync.md]
+150w_k3,q30,True,False,False,True,True,True,9.09504119999474,1005,400,"You can configure dependencies for different platforms by using markers in the `tool.uv.sources` section of your configuration. For example, you can specify different indices based on the operating system using `sys_platform`. Here are some examples:
+
+1. For using PyTorch's CPU builds on all platforms:
+   ```toml
+   [project]
+   name = ""project""
+   version = ""0.1.0""
+   requires-python = "">=3.14.0""
+   dependencies = [ ""torch>=2.11.0"", ""torchvision>=0.26.0"", ]
+   [tool.uv.sources]
+   torch = [ { index = ""pytorch-cpu"", } ]
+   torchvision = [ { index = ""pytorch-cpu"", } ]
+   ```
+
+2. For using PyTorch's AMD GPU builds on Linux and CPU-only builds on Windows and macOS:
+   ```toml
+   [project]
+   name = ""project""
+   version = ""0.1.0""
+   requires-python = "">=3.14.0""
+   dependencies = [ ""torch>=2.11.0"", ""torchvision>=0.26.0"", ""pytorch-triton-rocm>=3.5.1 ; sys_platform == 'linux'"", ""triton-rocm>=3.6.0 ; sys_platform == 'linux'"", ]
+   [tool.uv.sources]
+   torch = [ { index = ""pytorch-rocm"", marker = ""sys_platform == 'linux'"" }, ]
+   ```
+
+3. For limiting the PyTorch index to Linux and Windows, falling back to PyPI on macOS:
+   ```toml
+   [tool.uv.sources]
+   torch = [ { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux' or sys_platform == 'win32'"" }, ]
+   torchvision = [ { index = ""pytorch-cu130"", marker = ""sys_platform =="
+150w_k3,q31,True,False,False,False,False,True,1.6786767999874428,691,63,"You can ensure that your Python environment matches the specifications in the lockfile by using the `uv sync` command, which will synchronize your environment with the exact resolved versions specified in the `uv.lock` file. This command is designed to maintain consistency and reproducibility across installations [concepts__projects__layout.md]."
+150w_k3,q32,True,False,False,True,True,True,3.4413349999813363,822,134,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a kernel for the project by installing `ipykernel` as a development dependency and then creating the kernel. After that, when you create a notebook, select the project's kernel from the dropdown. You can then use `!uv add pydantic` to add `pydantic` to the project's dependencies, or `!uv pip install pydantic` to install it into the project's virtual environment without persisting the change to the project's `pyproject.toml` or `uv.lock` files [guides__integration__jupyter.md]."
+150w_k3,q33,True,False,False,True,True,True,2.1450034999870695,768,97,"To optimize cache usage for package installation in continuous integration environments using uv, you can run the command `uv cache prune --ci` at the end of your continuous integration job. This command removes all pre-built wheels and unzipped source distributions from the cache while retaining any wheels that were built from source, ensuring maximum cache efficiency. Additionally, consider moving the cache inside the GitHub Workspace and cleaning it up after the job finishes using a post job hook [concepts__cache.md]."
+150w_k3,q34,True,False,False,True,True,True,2.2620204999984708,1023,82,"The `pyproject.toml` file contains metadata about your project, including its name, version, description, authors, Python version requirements, and dependencies. It is used to specify project details and configuration options for uv. Additionally, it helps uv identify the root directory of a project and can be edited manually or managed using commands like `uv add` and `uv remove` [guides__projects.md]."
+150w_k3,q35,True,False,False,True,True,True,1.8402027999982238,952,73,"You can install executables from multiple packages using the `--with-executables-from` option. For example: 
+
+```console
+$ uv tool install --with-executables-from <package1>,<package2> <tool-package>
+```
+
+This will install all executables from the specified packages alongside the main tool package [concepts__tools.md]."
+150w_k3,q36,True,False,False,True,True,True,2.3112489999912214,822,105,"You can provide dependency metadata for a package that does not declare it upfront by using the `tool.uv.dependency-metadata` table in your `pyproject.toml`. For example:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package-name""
+version = ""package-version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows you to specify the metadata directly, enabling uv to skip the build step and use the provided metadata instead [concepts__resolution.md]."
+150w_k3,q37,True,False,False,True,True,True,1.546946399990702,727,58,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, which is especially important for avoiding modifications to the system's Python environment. This helps prevent conflicts and ensures that packages are managed independently for different projects. [pip__environments.md]"
+150w_k3,q38,True,False,False,True,True,True,3.050126199988881,855,78,"To upgrade a specific package in your tool environment using uv, you can use the command: ```console $ uv tool upgrade <package_name> --upgrade-package <specific_package>```. For example, to upgrade the package `click` in the tool environment for `black`, you would run: ```console $ uv tool upgrade black --upgrade-package click``` [concepts__tools.md]."
+150w_k3,q39,True,False,False,True,True,True,4.350493199977791,1133,161,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Install uv**: Use the `astral-sh/setup-uv` action to install uv in your GitHub Actions workflow.
+2. **Build the package**: Run `uv build` to build your package.
+3. **Run smoke tests** (optional but recommended): Execute smoke tests on the built distributions using `uv run`.
+4. **Upload distributions as artifacts**: Use the `actions/upload-artifact` action to upload the built distributions.
+5. **Publish the package**: Run `uv publish` to publish the package to a registry like PyPI.
+
+Make sure to create the necessary environment in your GitHub repository settings for the publishing step [guides__integration__github.md]."
+150w_k3,q40,True,False,False,False,True,True,6.434661200008122,878,194,"To manage project dependencies using the uv package manager, you can define them in several fields within your `pyproject.toml` file:
+
+1. **Published dependencies**: Use the `project.dependencies` field for dependencies that your project requires.
+2. **Optional dependencies (extras)**: Define these in the `project.optional-dependencies` field for dependencies that are not mandatory but can be included based on user choice.
+3. **Development dependencies**: Use `dependency-groups` for local dependencies needed during development.
+4. **Alternative sources**: Specify any alternative sources for dependencies in the `tool.uv.sources` field.
+
+You can modify the project's dependencies using the `uv add` and `uv remove` commands, or by directly editing the `pyproject.toml` file. Additionally, you can use flags like `--dev`, `--group`, or `--optional` when adding dependencies to specify their category [concepts__projects__dependencies.md]."
+150w_k3,h01,True,False,False,True,True,True,2.6406137000012677,743,70,"`uvx` invokes a tool without installing it, running it in a temporary, isolated environment. In contrast, `uv tool install` installs the tool, making its executables available on the `PATH`, while still using an isolated virtual environment that is not removed after the command completes [guides__tools.md][concepts__tools.md]."
+150w_k3,h02,True,False,False,False,True,True,4.179694799997378,958,117,"You can install only the dependencies and skip your own project by using the `--no-install-project` option with the `uv sync` command. For example, you can run:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+```
+
+This will install the dependencies of the project but not the project itself, which helps improve build times by caching layers better [guides__integration__docker.md]."
+150w_k3,h03,True,False,False,True,True,True,1.5270139999920502,309,46,"You can shrink your CI cache by running the command `uv cache prune`, which removes all unused cache entries and centralized project environments. This command is safe to run periodically to keep the cache directory clean [concepts__cache.md]."
+150w_k3,h04,True,False,False,True,True,True,0.9517441999923903,797,44,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13, because changing minor versions can affect dependency resolution [concepts__python-versions.md]."
+150w_k3,h05,True,False,False,True,False,True,1.5308911000029184,762,44,You can place a `uv.toml` file in the system-level configuration directory at `%PROGRAMDATA%\uv\uv.toml` on Windows to apply it to all your projects [concepts__configuration-files.md].
+150w_k3,h06,True,False,False,True,True,True,2.1881013000092935,918,89,"To install a dependency straight from a GitHub tag with uv, you can use the following command format: 
+
+```console
+$ uv add ""httpx @ git+https://github.com/encode/httpx@<tag>""
+```
+
+Replace `<tag>` with the specific tag you want to install. This will add an entry in the sources field of your `pyproject.toml` file. [concepts__projects__dependencies.md]"
+150w_k3,h07,True,False,False,True,True,True,1.4186242000141647,764,33,"No, uv does not support the `--user` flag. Instead, it recommends the use of virtual environments to isolate package installations [pip__compatibility.md]."
+150w_k3,q41,False,True,True,,,,0.27365310001187027,0,0,I don't know based on the documentation.
+150w_k3,q42,False,True,False,,,,1.113043799996376,774,8,I don't know based on the documentation.
+150w_k3,q43,False,True,False,,,,1.0139487000124063,947,8,I don't know based on the documentation.
+150w_k3,q44,False,True,False,,,,0.7910588000086136,1248,8,I don't know based on the documentation.
+150w_k3,q45,False,True,False,,,,0.9073126000002958,827,8,I don't know based on the documentation.
+150w_k3,q46,False,True,False,,,,0.9143467000103556,974,8,I don't know based on the documentation.
+150w_k3,q47,False,True,True,,,,0.14050089998636395,0,0,I don't know based on the documentation.
+150w_k3,q48,False,True,True,,,,0.17793239999446087,0,0,I don't know based on the documentation.
+150w_k5,q01,True,False,False,True,True,True,3.8447217000066303,1281,84,"You can run a Python tool without installing it using the `uvx` command. For example, to run `ruff`, you would use the command: 
+
+```console
+$ uvx ruff
+```
+
+This command is equivalent to `uv tool run ruff` and will invoke the tool without installation, using a temporary virtual environment for its dependencies [concepts__tools.md][guides__tools.md]."
+150w_k5,q02,True,False,False,True,True,True,2.404131100018276,1869,115,"You can specify a Git dependency from a specific branch by using the `--branch` option when adding the dependency. For example: 
+
+```console
+$ uv add git+https://github.com/encode/httpx --branch main
+```
+
+This will result in a `pyproject.toml` entry like this:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", branch = ""main"" }
+``` [concepts__projects__dependencies.md]"
+150w_k5,q03,True,False,False,True,True,True,3.597035799990408,1522,175,"To set up a namespace package using the uv package manager, you need to structure your project with a `pyproject.toml` file that specifies the `module-name` in the `[tool.uv.build-backend]` section. For example, if you want to package the module `bar` in the shared namespace `foo`, your project structure should look like this:
+
+```
+pyproject.toml
+src
+└── foo
+    └── bar
+        └── __init__.py
+```
+
+And your `pyproject.toml` configuration would be:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""foo.bar""
+```
+
+Note that the `__init__.py` file is not included in the `foo` directory, as it is the shared namespace module [concepts__build-backend.md]."
+150w_k5,q04,True,False,False,True,True,True,1.3490697999950498,1344,53,You can increment the minor version of your package using the `--bump` option with the command: ```console $ uv version --bump minor hello-world 1.2.3 => 1.3.0 ``` [guides__package.md]
+150w_k5,q05,True,False,False,True,True,True,1.481281200016383,1546,65,"You can specify a specific version of a package when using uv to run a command by using the `command@<version>` syntax. For example, to run a specific version of `ruff`, you would use: ```console $ uvx ruff@0.3.0 check ``` [guides__tools.md]"
+150w_k5,q06,True,False,False,True,True,True,3.110991699999431,1450,166,"At the project level, uv looks for a `pyproject.toml` or `uv.toml` file in the current directory or in the nearest parent directory. The `pyproject.toml` file must contain a `[tool.uv]` table to be read, while the `uv.toml` file follows an identical structure but omits the `[tool.uv]` prefix. 
+
+User-level configurations, on the other hand, are found in specific directories such as `~/.config/uv/uv.toml` on macOS and Linux, or `%APPDATA%\uv\uv.toml` on Windows. User-level configuration files cannot use the `pyproject.toml` format, and settings from project-level configurations take precedence over user-level configurations when both are present [concepts__configuration-files.md]."
+150w_k5,q07,True,False,False,True,True,True,1.42191490001278,1253,102,"uv allows upgrading managed Python versions to the latest supported patch release using the `python upgrade` command. It does not allow upgrading across minor Python versions. After an upgrade, uv will prefer the new version but retain the existing version for use by virtual environments. Virtual environments created with a specific patch version will not be automatically upgraded to a new version. Upgrades are only supported for uv-managed Python versions, not for PyPy, GraalPy, or Pyodide [concepts__python-versions.md]."
+150w_k5,q08,True,False,False,True,True,True,3.536936099990271,1313,182,"In the uv package manager, configuration precedence works as follows:
+
+1. Settings provided via command line take precedence over both environment variables and persistent configuration.
+2. Environment variables take precedence over persistent configuration.
+3. If project-level, user-level, and system-level configuration files are found, they are merged with the following precedence:
+   - Project-level configuration takes precedence over user-level configuration.
+   - User-level configuration takes precedence over system-level configuration.
+4. If multiple system-level configuration files are found, only the first-discovered file will be used, with XDG taking priority. 
+
+For example, if a setting is present in both project-level and user-level configurations, the project-level value will be used, and the user-level value will be ignored. If an array is present in both, the arrays will be concatenated with project-level settings appearing earlier in the merged array [concepts__configuration-files.md]."
+150w_k5,q09,True,False,False,True,True,True,4.687499499996193,1443,259,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file. [getting-started__installation.md]"
+150w_k5,q10,True,False,False,True,True,False,3.638561200001277,1352,169,"uv provides several options to control the installation of projects and packages during synchronization:
+
+1. `--no-install-project`: Do not install the current project.
+2. `--no-install-workspace`: Do not install any workspace members, including the root project.
+3. `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the specified package(s).
+4. `--no-editable`: Opt-out of installing the project as an editable package, which means changes to the source code will not be reflected in the environment.
+5. `--inexact`: Retain extraneous packages during syncing.
+6. `--exact`: Enable exact syncing with `uv run`, ensuring that only selected packages are installed and extraneous packages are removed. 
+
+These options help manage dependencies and the installation process effectively [concepts__projects__sync.md]."
+150w_k5,q11,True,False,False,True,True,True,1.406144700013101,1413,37,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution. [concepts__build-backend.md]"
+150w_k5,q12,True,False,False,True,True,True,1.7145743000146467,1203,56,"If uv rejects a package that pip would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+150w_k5,q13,True,True,False,True,False,,0.8699719000142068,1381,8,I don't know based on the documentation.
+150w_k5,q14,True,False,False,True,True,True,5.3702928999846336,1384,163,"To run a script that requires an external package using the uv package manager, you can declare the dependencies in the script using inline metadata or use the `uv add` command to specify the dependencies. For example, you can add dependencies directly in the script like this:
+
+```python
+# /// script
+# dependencies = [
+# ""requests<3"",
+# ""rich"",
+# ]
+# ///
+```
+
+Then, you can run the script with `uv run example.py`, and uv will automatically create an environment with the necessary dependencies to run the script. Alternatively, you can use the command:
+
+```console
+$ uv add --script example.py 'requests<3' 'rich'
+```
+
+This will add the dependencies to the script and create the required environment when you run it. [guides__scripts.md]"
+150w_k5,q15,True,False,False,True,True,True,3.673635200015269,1387,164,"To configure uv to use a private package index instead of the default PyPI, you can add an entry to your `pyproject.toml` file under `[[tool.uv.index]]`. Here’s an example configuration:
+
+```toml
+[[tool.uv.index]]
+name = ""my-private-index""
+url = ""https://my-private-index-url.com/simple""
+```
+
+Additionally, if you want to exclude PyPI from the list of indexes, set `default = true` on the index entry:
+
+```toml
+[[tool.uv.index]]
+name = ""my-private-index""
+url = ""https://my-private-index-url.com/simple""
+default = true
+```
+
+You can also use the `--index` command-line option to specify the index when running uv commands [concepts__indexes.md]."
+150w_k5,q16,True,False,False,True,True,True,2.7424287000030745,1347,103,"You can test if your package installed with uv can be imported successfully by using the command: 
+
+```console
+$ uv run --with <PACKAGE> --no-project -- python -c ""import <PACKAGE>""
+```
+
+The `--no-project` flag is used to avoid installing the package from your local project directory. If you have recently installed the package, you may need to include the `--refresh-package <PACKAGE>` option to avoid using a cached version of the package. [guides__package.md]"
+150w_k5,q18,True,False,False,True,True,True,2.2335684999998193,1405,109,"It is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s an example:
+
+```dockerfile
+# Copy the requirements file into the container
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+
+# Copy the rest of the source code
+COPY . .
+RUN uv pip install -e .
+``` [guides__integration__docker.md]"
+150w_k5,q19,True,False,False,True,True,True,2.513319899997441,1379,131,"You can add a local package dependency using uv by specifying the path to the package. For example, to add a package located at `./path/foo`, you would use the command: 
+
+```console
+$ uv add ./path/foo
+```
+
+If you want to add it as an editable dependency, you can use the `--editable` flag:
+
+```console
+$ uv add --editable ./path/foo
+``` 
+
+To opt-out of using an editable dependency, you can use the `--no-editable` flag:
+
+```console
+$ uv add --no-editable ./path/foo
+``` 
+
+[concepts__projects__dependencies.md]"
+150w_k5,q20,True,False,False,True,True,True,1.4373490000143647,1236,55,"You can clear the cache for a specific package in uv by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would run `uv cache clean ruff` [concepts__cache.md]."
+150w_k5,q21,True,False,False,True,True,True,2.5338618000096176,1194,94,"uv can export a lockfile to the following formats: 
+- `requirements.txt`
+- `pylock.toml`
+- `CycloneDX`
+
+You can specify the desired format using the `--format` flag in the export command, for example:
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` [concepts__projects__export.md]"
+150w_k5,q22,True,False,False,True,True,True,1.9581464999937452,1299,90,"The uv package manager can use the `tool.uv.dependency-metadata` table to provide static metadata for packages that have incomplete or incorrect metadata. This allows uv to skip the build step and use the provided metadata instead. This is particularly useful for packages that do not declare static metadata upfront or when a package is not available in the package index. Additionally, metadata overrides allow overriding the declared metadata of a specific package [concepts__resolution.md]."
+150w_k5,q23,True,False,False,True,False,True,1.0933841000078246,1262,37,"To list all installed Python versions using the uv package manager, you can use the command: ```console $ uv python list --only-installed ``` [concepts__python-versions.md]"
+150w_k5,q24,True,False,False,True,True,True,2.5830545000208076,1452,105,"uv provides support for legacy setuptools scripts on Windows, specifically for scripts with the `.ps1`, `.cmd`, and `.bat` extensions. When running a Command Prompt script, you can use the command `uv run --with nuitka==2.6.7 -- nuitka.cmd --version`. You do not need to specify the extension, as `uv` will automatically look for files ending in `.ps1`, `.cmd`, and `.bat` in that order of execution [concepts__projects__run.md]."
+150w_k5,q25,True,False,False,True,True,True,2.4121239999949466,1278,92,"Workspaces in uv facilitate the development of multiple interconnected packages within a single repository, allowing for the organization of large codebases into smaller, composable packages. They help enforce isolation and separation of concerns, enabling independent testing of different components, such as the core library and the command-line interface. Additionally, workspaces ensure a consistent set of dependencies across all members by sharing a single lockfile, which simplifies dependency management [concepts__projects__workspaces.md]."
+150w_k5,q26,True,False,False,True,True,True,1.943434899993008,2269,71,"uv provides two types of Docker images: distroless images, which contain only the uv binaries, and derived images, which include an operating system with uv pre-installed. The distroless images are useful for copying uv binaries into custom image builds, while the derived images are useful for using uv in a container [guides__integration__docker.md]."
+150w_k5,q27,True,False,False,True,True,True,2.3384651000087615,1199,97,"uv provides the following commands for managing Python versions:
+
+- `uv python install`: Install Python versions.
+- `uv python list`: View available Python versions.
+- `uv python find`: Find an installed Python version.
+- `uv python pin`: Pin the current project to use a specific Python version.
+- `uv python uninstall`: Uninstall a Python version.
+- `uv python upgrade`: Upgrade a Python version to the latest supported patch release. [getting-started__features.md]"
+150w_k5,q28,True,False,False,True,True,True,2.232339799986221,1242,103,"You can create a new Python project using the `uv init` command. For example, you can run the following commands:
+
+```console
+$ uv init hello-world
+$ cd hello-world
+```
+
+Alternatively, you can initialize a project in the working directory by running:
+
+```console
+$ mkdir hello-world
+$ cd hello-world
+$ uv init
+```
+
+This will create the necessary files and directories for your project, including a `pyproject.toml` file. [guides__projects.md]"
+150w_k5,q29,True,False,False,True,True,True,1.3432972000155132,1108,41,You can check if your lockfile is up-to-date by passing the `--check` flag to `uv lock`: ```console $ uv lock --check ``` [concepts__projects__sync.md]
+150w_k5,q30,True,False,False,True,True,True,4.443708100006916,1594,184,"You can configure dependencies for different platforms by using the `tool.uv.sources` section in your `pyproject.toml` file. You can specify different indexes for `torch` and `torchvision` based on the platform using markers. For example:
+
+```toml
+[tool.uv.sources]
+torch = [ { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux' or sys_platform == 'win32'"" }, ]
+torchvision = [ { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux' or sys_platform == 'win32'"" }, ]
+```
+
+This configuration limits the PyTorch index to Linux and Windows, falling back to PyPI on macOS. You can also specify other indexes for different platforms as needed, such as using CPU-only builds on all platforms or specific GPU builds for Linux [guides__integration__pytorch.md]."
+150w_k5,q31,True,False,False,False,False,True,2.1101477000047453,1153,71,"You can ensure that your Python environment matches the specifications in the lockfile by using the command `uv sync`. This command will synchronize the environment with the versions specified in the `uv.lock` file. Additionally, you can explicitly check if the lockfile is up-to-date by using `uv lock --check` [concepts__projects__sync.md]."
+150w_k5,q32,True,False,False,True,True,True,4.195710200001486,1241,203,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a dedicated kernel for your project. This involves installing `ipykernel` as a development dependency and creating the kernel for your project. You can do this with the following commands:
+
+1. Install `ipykernel` as a development dependency:
+   ```console
+   $ uv add --dev ipykernel
+   ```
+
+2. Create the kernel for your project:
+   ```console
+   $ uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=project
+   ```
+
+3. Start the Jupyter server:
+   ```console
+   $ uv run --with jupyter jupyter lab
+   ```
+
+When you create a notebook, select the `project` kernel from the dropdown. This setup ensures that any packages installed from within the notebook will be added to the project's virtual environment [guides__integration__jupyter.md]."
+150w_k5,q33,True,False,False,True,True,True,3.5436803000047803,1465,199,"To optimize cache usage for package installation in continuous integration environments using uv, you can follow these steps:
+
+1. Use the `uv cache prune --ci` command at the end of your CI job to remove all pre-built wheels and unzipped source distributions from the cache, while retaining wheels built from source. This helps ensure maximum cache efficiency [concepts__cache.md].
+
+2. Consider persisting the uv cache across workflow runs to improve CI times. You can enable caching using the `astral-sh/setup-uv` action with the `enable-cache: true` option [guides__integration__github.md].
+
+3. Alternatively, manage the cache manually with the `actions/cache` action by configuring a constant location for the uv cache and restoring it as needed [guides__integration__github.md].
+
+4. If using `uv pip`, opt for `requirements.txt` instead of `uv.lock` in the cache key for better cache management [guides__integration__github.md]."
+150w_k5,q34,True,False,False,True,True,True,2.303496099979384,1368,80,"The `pyproject.toml` file contains metadata about your project, including its name, version, description, authors, Python version requirements, and dependencies. It is used to specify project details and manage dependencies, and it can also include configuration options for uv in a `[tool.uv]` section. Additionally, it helps uv identify the root directory of a project [guides__projects.md]."
+150w_k5,q35,True,False,False,True,True,True,2.6274991999962367,1435,73,"You can install executables from multiple packages using the `--with-executables-from` option. For example: 
+
+```console
+$ uv tool install --with-executables-from <package1>,<package2> <tool-package>
+```
+
+This will install all executables from the specified packages alongside the main tool package [concepts__tools.md]."
+150w_k5,q36,True,False,False,True,True,True,2.49741539999377,1314,100,"You can provide dependency metadata for a package that does not declare it upfront by including its `dependency-metadata` in the `pyproject.toml` file. For example:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package-name""
+version = ""package-version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows uv to use the provided metadata instead of requiring the package to be built to determine its metadata [concepts__resolution.md]."
+150w_k5,q37,True,False,False,True,True,True,1.4631500999967102,1231,59,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, preventing modifications to the global environment and avoiding potential conflicts with system-managed packages. This isolation allows for better management of dependencies and versions specific to a project. [pip__environments.md]"
+150w_k5,q38,True,False,False,True,True,True,2.69548749999376,1332,78,"To upgrade a specific package in your tool environment using uv, you can use the command: ```console $ uv tool upgrade <package-name> --upgrade-package <specific-package> ```. For example, to upgrade the package `click` in the tool environment for `black`, you would run: ```console $ uv tool upgrade black --upgrade-package click ``` [concepts__tools.md]."
+150w_k5,q39,True,False,False,True,True,True,6.662038499984192,1691,398,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Install uv**: Use the official `astral-sh/setup-uv` action to install uv in your GitHub Actions workflow.
+   ```yaml
+   - name: Install uv
+     uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+   ```
+
+2. **Build the package**: Run the `uv build` command to build your package.
+   ```yaml
+   - name: Build
+     run: uv build
+   ```
+
+3. **Run smoke tests** (optional but recommended): Test the built distributions using `uv run`.
+   ```yaml
+   - name: Smoke test (wheel)
+     run: uv run --isolated --no-project --with dist/*.whl tests/smoke_test.py
+   - name: Smoke test (source distribution)
+     run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py
+   ```
+
+4. **Upload distributions as artifacts**: Use the `actions/upload-artifact` action to upload the built distributions.
+   ```yaml
+   - name: Upload distributions as artifacts
+     uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+     with:
+       name: dist
+       path: dist/
+   ```
+
+5. **Publish the package**: Finally, run the `uv publish` command to publish the package.
+   ```yaml
+   - name: Publish
+     run: uv publish
+   ``` 
+
+These steps will help you build and publish your package using uv in a GitHub Actions workflow [guides__integration__github.md]."
+150w_k5,q40,True,False,False,False,True,True,3.8154968000017107,1382,180,"You can manage project dependencies in uv by defining them in several fields within your `pyproject.toml` file:
+
+1. **Published dependencies**: Use the `project.dependencies` field for required dependencies.
+2. **Optional dependencies**: Use the `project.optional-dependencies` field for optional dependencies, also known as ""extras"".
+3. **Development dependencies**: Use `dependency-groups` for local development dependencies.
+4. **Alternative sources**: Specify alternative sources for dependencies using `tool.uv.sources`.
+
+You can add dependencies using the command `uv add <dependency>`, and you can also modify dependencies with `uv remove`. Additionally, you can use flags like `--dev`, `--group`, or `--optional` to specify where to add the dependency. The dependencies will include version constraints automatically, or you can specify them directly [concepts__projects__dependencies.md]."
+150w_k5,h01,True,False,False,True,True,True,2.6307180000003427,1176,107,"`uvx` invokes a tool without installing it, running it in a temporary, isolated environment. In contrast, `uv tool install` installs the tool, making its executables available on the `PATH`, and the isolated virtual environment used for installation is not removed after the command completes. This means that executing a tool with `uvx` is more appropriate for one-off uses, while installing it is useful for making the tool available for other programs or scripts. [guides__tools.md], [concepts__tools.md]"
+150w_k5,h02,True,False,False,False,True,True,4.327533300005598,1549,117,"You can install only the dependencies and skip your own project by using the `--no-install-project` option with the `uv sync` command. For example, you can run:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+```
+
+This will install the dependencies of the project but not the project itself, which helps improve build times by caching layers better [guides__integration__docker.md]."
+150w_k5,h03,True,False,False,True,True,True,1.342957499990007,309,46,"You can shrink your CI cache by running the command `uv cache prune`, which removes all unused cache entries and centralized project environments. This command is safe to run periodically to keep the cache directory clean [concepts__cache.md]."
+150w_k5,h04,True,False,False,True,True,True,0.9796391999989282,1250,44,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13, because changing minor versions can affect dependency resolution [concepts__python-versions.md]."
+150w_k5,h05,True,False,False,True,False,True,1.4800612999824807,1330,44,You can place a `uv.toml` file in the system-level configuration directory at `%PROGRAMDATA%\uv\uv.toml` on Windows to apply it to all your projects [concepts__configuration-files.md].
+150w_k5,h06,True,False,False,True,True,True,2.7451098000165075,1567,76,"To install a dependency straight from a GitHub tag with uv, you can use the following command:
+
+```console
+$ uv add git+https://github.com/encode/httpx --tag 0.27.0
+```
+
+This will add the dependency and include a tag entry in the `pyproject.toml` file. [concepts__projects__dependencies.md]"
+150w_k5,h07,True,False,False,True,True,True,1.489281200018013,1196,43,"No, uv does not support the `--user` flag, which installs packages based on the `user` install scheme. Instead, it recommends using virtual environments to isolate package installations [pip__compatibility.md]."
+150w_k5,q41,False,True,True,,,,0.16163839999353513,0,0,I don't know based on the documentation.
+150w_k5,q42,False,True,False,,,,0.9347064000030514,1345,8,I don't know based on the documentation.
+150w_k5,q43,False,True,False,,,,1.2869587000168394,1621,8,I don't know based on the documentation.
+150w_k5,q44,False,True,False,,,,0.7635585000098217,2032,8,I don't know based on the documentation.
+150w_k5,q45,False,True,False,,,,0.9717874000198208,1354,8,I don't know based on the documentation.
+150w_k5,q46,False,True,False,,,,0.9997221000085119,1249,8,I don't know based on the documentation.
+150w_k5,q47,False,True,True,,,,0.42823069999576546,0,0,I don't know based on the documentation.
+150w_k5,q48,False,True,True,,,,0.25985210001817904,0,0,I don't know based on the documentation.
+300w_k3,q01,True,False,False,True,True,True,2.099056799983373,1225,59,"You can run a Python tool without installing it using the `uvx` command. For example, to run `ruff`, you would use the command: ```console $ uvx ruff ``` This command invokes the tool in a temporary, isolated environment without installation [concepts__tools.md]."
+300w_k3,q02,True,False,False,True,True,True,2.5981291999923997,1859,116,"To specify a Git dependency from a specific branch using the uv package manager, you can use the following command:
+
+```console
+$ uv add git+https://github.com/encode/httpx --branch main
+```
+
+This will add the dependency from the specified branch in the `pyproject.toml` as follows:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", branch = ""main"" }
+``` 
+
+[concepts__projects__dependencies.md]"
+300w_k3,q03,True,False,False,True,True,True,2.3644100000092294,1699,106,"To set up a namespace package using the uv package manager, you need to define the `module-name` with a `.` in it to identify the namespace. For example, if you want to package the module `bar` in a namespace package, you would configure it in your `pyproject.toml` like this:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""namespace.bar""
+```
+
+This allows multiple packages to write modules into the shared namespace [concepts__build-backend.md]."
+300w_k3,q04,True,False,False,True,True,True,1.75370760000078,1555,91,"You can increment the minor version of your package using the `--bump` option with the value `minor`. For example: 
+
+```console
+$ uv version --bump minor hello-world 1.2.3 => 1.3.0
+``` 
+
+This command will change the version from `1.2.3` to `1.3.0` for the package `hello-world` [guides__package.md]."
+300w_k3,q05,True,False,False,True,True,True,2.3377445000223815,1776,106,"To run a tool at a specific version, use the syntax `command@<version>`. For example: 
+```console
+$ uvx ruff@0.3.0 check
+```
+You can also use the `--from` option to specify package versions, like this:
+```console
+$ uvx --from 'ruff==0.3.0' ruff check
+``` 
+Note that the `@` syntax cannot be used for anything other than an exact version [guides__tools.md]."
+300w_k3,q06,True,False,False,True,True,True,4.023026499984553,1661,196,"At the project level, uv looks for a `pyproject.toml` or `uv.toml` file in the current directory or in the nearest parent directory. If a `pyproject.toml` file is found, uv will read configuration from the `[tool.uv]` table. If both `uv.toml` and `pyproject.toml` files are present, configuration will be read from `uv.toml`, and the `[tool.uv]` section in the accompanying `pyproject.toml` will be ignored.
+
+In contrast, user-level configurations are found in specific directories, such as `~/.config/uv/uv.toml` on macOS and Linux, or `%APPDATA%\uv\uv.toml` on Windows. User- and system-level configuration files cannot use the `pyproject.toml` format, and settings from project-level configurations take precedence over user-level configurations when they are merged [concepts__configuration-files.md]."
+300w_k3,q07,True,False,False,True,True,True,2.522374399995897,1212,99,"uv allows upgrading Python versions that it manages to the latest supported patch release using the `python upgrade` command. It does not support upgrading across minor Python versions. After an upgrade, uv will prefer the new version but retain the existing version for use by virtual environments. Virtual environments using the Python version will be automatically upgraded to the new patch version, unless they were created with an explicitly requested patch version, in which case they will not be transparently upgraded [concepts__python-versions.md]."
+300w_k3,q08,True,False,False,True,True,True,2.6334873999876436,1547,146,"In the uv package manager, configuration precedence works as follows: project-level configuration takes precedence over user-level configuration, and user-level configuration takes precedence over system-level configuration. If multiple system-level configuration files are found, only the first-discovered file will be used, with XDG taking priority. Additionally, settings provided via environment variables take precedence over persistent configuration, and settings provided via the command line take precedence over both. If the `--no-config` argument is provided, it disables the discovery of any persistent configuration. If the `--config-file` argument is used, it specifies a `uv.toml` file to use in place of any discovered configuration files, ignoring user-level configuration. [concepts__configuration-files.md]"
+300w_k3,q09,True,False,False,True,True,True,3.8946761999977753,1847,258,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file [getting-started__installation.md]."
+300w_k3,q10,True,False,False,True,True,True,2.51604529999895,1350,93,"uv provides the following options to control the installation of projects and packages during synchronization:
+
+- `--no-install-project`: Do not install the current project.
+- `--no-install-workspace`: Do not install any workspace members, including the root project.
+- `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the given package(s).
+
+These options allow for partial installations while still installing all dependencies of the target [concepts__projects__sync.md]."
+300w_k3,q11,True,False,False,True,True,True,1.8577362000069115,1725,36,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution [concepts__build-backend.md]."
+300w_k3,q12,True,False,False,True,True,True,2.2569567000027746,1438,58,"If uv rejects a package that `pip` would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+300w_k3,q13,True,True,False,False,False,,0.8558388999954332,1721,8,I don't know based on the documentation.
+300w_k3,q14,True,False,False,True,True,True,4.6080121000122745,1677,157,"To run a script that requires an external package using the uv package manager, you can use the `--with` option to specify the dependency. For example, if your script requires the `rich` package, you would run:
+
+```console
+$ uv run --with rich example.py
+```
+
+If you need to specify version constraints for the dependency, you can do so like this:
+
+```console
+$ uv run --with 'rich>12,<13' example.py
+```
+
+You can also request multiple dependencies by repeating the `--with` option. If you are running the script in a project, these dependencies will be included in addition to the project's dependencies unless you use the `--no-project` flag to opt-out of this behavior [guides__scripts.md]."
+300w_k3,q15,True,False,False,True,True,True,3.802971199998865,1547,140,"To configure uv to use a private package index instead of the default PyPI, you can add a `[[tool.uv.index]]` entry to your `pyproject.toml` file. Here’s an example configuration:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""  # Optional name for the index.
+url = ""https://download.pytorch.org/whl/cpu""  # Required URL for the index.
+default = true  # Set this to exclude PyPI as the default index.
+```
+
+This configuration will make the specified index the default, thus excluding PyPI from the list of indexes used for package resolution [concepts__indexes.md]."
+300w_k3,q16,True,False,False,True,True,True,2.453355100005865,1363,74,"You can test that the package can be installed and imported with `uv run` using the following command: 
+
+```console
+$ uv run --with <PACKAGE> --no-project -- python -c ""import <PACKAGE>""
+```
+
+The `--no-project` flag is used to avoid installing the package from your local project directory. [guides__package.md]"
+300w_k3,q18,True,False,False,True,True,True,2.723116899986053,1791,107,"When installing a project alongside requirements in a Dockerfile using the uv package manager, it is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s an example:
+
+```dockerfile
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+COPY . .
+RUN uv pip install -e .
+``` [guides__integration__docker.md]"
+300w_k3,q19,True,False,False,True,True,True,1.813786100014113,1658,59,"To add a local package dependency using uv, you can use the following command:
+
+```console
+$ uv add ""httpx @ ../httpx""
+```
+
+This will update the `tool.uv.sources` table to use the local path during development [concepts__projects__dependencies.md]."
+300w_k3,q20,True,False,False,True,True,True,1.7954255000222474,1361,55,"You can clear the cache for a specific package in uv by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would run `uv cache clean ruff` [concepts__cache.md]."
+300w_k3,q21,True,False,False,True,True,True,3.106423699995503,1608,124,"uv can export a lockfile to the following formats: 
+- `requirements.txt`
+- `pylock.toml`
+- `CycloneDX`
+
+You can specify the desired format using the `--format` flag in the export command, like this:
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` 
+By default, `uv export` prints to stdout, but you can use `--output-file` to write to a file for any format. [concepts__projects__export.md]"
+300w_k3,q22,True,False,False,True,True,True,2.6415651999996044,1589,122,"The uv package manager allows users to provide static metadata for packages with incomplete or incorrect metadata using the `tool.uv.dependency-metadata` table in the `pyproject.toml`. This enables uv to resolve the package without needing to build it from source, which is particularly useful when the package's metadata is not available upfront or is incorrect. Additionally, this approach can be used for packages that are not available in the package index. The `version` field in `tool.uv.dependency-metadata` is optional for registry-based dependencies but required for direct URL dependencies. [concepts__resolution.md]"
+300w_k3,q23,True,False,False,True,False,True,1.3450382000009995,1531,29,You can list all installed Python versions using the command: ```console $ uv python list --only-installed ``` [guides__install-python.md]
+300w_k3,q24,True,False,False,True,True,True,2.916314100002637,1340,124,"uv provides support for legacy setuptools scripts on Windows, specifically for scripts with the `.ps1`, `.cmd`, and `.bat` extensions. These scripts are installed in `.venv\Scripts`. When running a Command Prompt script, you can use the command `uv run --with <tool> -- <script>` without needing to specify the extension, as uv will automatically look for the appropriate file types in order of execution. For example, you can run a script like this: `uv run --with nuitka==2.6.7 -- nuitka --version` [concepts__projects__run.md]."
+300w_k3,q25,True,False,False,True,True,True,3.9062887000036426,1659,174,"Workspaces in uv facilitate the development of multiple interconnected packages by allowing for the following benefits:
+
+1. **Isolation and Separation of Concerns**: Workspaces help enforce isolation between packages, enabling independent testing and development of each package.
+2. **Shared Dependencies**: They allow multiple packages to share a single lockfile, ensuring a consistent set of dependencies across the workspace.
+3. **Organized Codebase**: Workspaces help organize large codebases by splitting them into smaller, composable packages, making it easier to manage complexity.
+4. **Flexible Package Management**: Dependencies between workspace members are editable, and workspace-level source definitions apply to all members unless overridden, providing flexibility in dependency management.
+
+These benefits make workspaces suitable for scenarios like libraries with performance-critical components or plugin systems where each plugin is a separate package [concepts__projects__workspaces.md]."
+300w_k3,q26,True,False,False,True,True,True,1.810192700009793,2383,49,"uv provides two types of Docker images: distroless images and derived images. The distroless images contain only the uv binaries, while the derived images include an operating system with uv pre-installed. [guides__integration__docker.md]"
+300w_k3,q27,True,False,False,False,True,True,4.936463200021535,1414,258,"uv provides the following commands for managing Python versions:
+
+1. To install the latest Python version: 
+   ```console
+   $ uv python install
+   ```
+
+2. To install a specific Python version: 
+   ```console
+   $ uv python install 3.12
+   ```
+
+3. To install multiple Python versions: 
+   ```console
+   $ uv python install 3.11 3.12
+   ```
+
+4. To install an alternative Python implementation (e.g., PyPy): 
+   ```console
+   $ uv python install pypy@3.10
+   ```
+
+5. To reinstall uv-managed Python versions: 
+   ```console
+   $ uv python install --reinstall
+   ```
+
+6. To upgrade a specific Python version to the latest supported patch release: 
+   ```console
+   $ uv python upgrade 3.12
+   ```
+
+7. To upgrade all uv-managed Python versions: 
+   ```console
+   $ uv python upgrade
+   ```
+
+8. To view available and installed Python versions: 
+   ```console
+   $ uv python list
+   ``` 
+
+See the respective documentation for more details on each command [guides__install-python.md][concepts__python-versions.md]."
+300w_k3,q28,True,False,False,True,True,True,2.180691600020509,1546,89,"You can create a new Python project using the `uv init` command. For example, you can run:
+
+```console
+$ uv init hello-world
+$ cd hello-world
+```
+
+Alternatively, you can initialize a project in the working directory by running:
+
+```console
+$ mkdir hello-world
+$ cd hello-world
+$ uv init
+```
+
+This will create the necessary files and directories for your project [guides__projects.md]."
+300w_k3,q29,True,False,False,True,True,True,3.966040699975565,1473,58,"You can check if your lockfile is up-to-date by passing the `--check` flag to `uv lock`: 
+
+```console
+$ uv lock --check
+```
+
+This is equivalent to the `--locked` flag for other commands [concepts__projects__sync.md]."
+300w_k3,q30,True,False,False,True,True,True,5.035607700003311,1850,163,"You can configure dependencies for different platforms by using environment markers in the `[tool.uv.sources]` section of your configuration. For example, you can specify different indexes for each platform like this:
+
+```toml
+[tool.uv.sources]
+torch = [ { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" }, { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" }, ]
+torchvision = [ { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" }, { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" }, ]
+```
+
+This configuration uses CPU-only builds for non-Linux platforms and CUDA-enabled builds for Linux [guides__integration__pytorch.md]."
+300w_k3,q31,True,False,False,True,False,True,2.1638231000106316,1516,92,"To ensure that your Python environment matches the specifications in the lockfile when using the uv package manager, you should use the `uv sync` command. This command will synchronize your environment with the exact resolved versions specified in the `uv.lock` file. Additionally, avoid modifying the project environment manually and use `uv add` to add packages instead. The lockfile should be checked into version control for consistent installations across machines [concepts__projects__layout.md]."
+300w_k3,q32,True,False,False,True,True,True,7.39433189999545,1426,251,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a kernel for the project by installing `ipykernel` as a development dependency and then running the appropriate commands to set up the kernel. Here are the steps:
+
+1. Install `ipykernel` as a development dependency:
+   ```console
+   $ uv add --dev ipykernel
+   ```
+
+2. Create the kernel for your project:
+   ```console
+   $ uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=project
+   ```
+
+3. Start the Jupyter server:
+   ```console
+   $ uv run --with jupyter jupyter lab
+   ```
+
+4. When creating a notebook, select the `project` kernel from the dropdown.
+
+5. Use `!uv add <package>` to add packages to the project's dependencies, or `!uv pip install <package>` to install packages into the project's virtual environment without persisting the change to the `pyproject.toml` or `uv.lock` files. Both commands will make `import <package>` work within the notebook. [guides__integration__jupyter.md]"
+300w_k3,q33,True,False,False,True,True,True,2.2831328000174835,1609,132,"To optimize cache usage for package installation in continuous integration environments using uv, you can use the `uv cache prune --ci` command. This command removes all pre-built wheels and unzipped source distributions from the cache while retaining any wheels that were built from source. It is recommended to run this command at the end of your continuous integration job to ensure maximum cache efficiency [concepts__cache.md]. Additionally, you can enable caching in your CI workflow by using the `astral-sh/setup-uv` action with the `enable-cache: true` option or manage the cache manually with the `actions/cache` action [guides__integration__github.md]."
+300w_k3,q34,True,False,False,True,True,True,1.3541143999900669,1620,68,"The `pyproject.toml` file contains metadata about your project, including its name, version, description, authors, Python version requirements, and dependencies. It is used to specify project details and configuration options, and can be edited manually or managed through commands like `uv add` and `uv remove` [guides__projects.md]."
+300w_k3,q35,True,False,False,True,True,True,2.936454100010451,1748,77,"You can install executables from multiple packages using the `--with-executables-from` option. For example: 
+
+```console
+$ uv tool install --with-executables-from package1,package2 package
+```
+
+This will install all executables from the specified packages into the same tool environment, making them available on the `PATH` [concepts__tools.md]."
+300w_k3,q36,True,False,False,True,True,True,2.0253098999965005,1550,97,"You can provide dependency metadata for a package that does not declare it upfront by using the `tool.uv.dependency-metadata` table in your `pyproject.toml`. For example:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package-name""
+version = ""package-version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows uv to skip the build step and use the provided metadata instead [concepts__resolution.md]."
+300w_k3,q37,True,False,False,True,True,True,2.478798600001028,1467,79,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, which is considered best practice. This isolation helps avoid modifying the system's Python environment, especially for installations that come with the operating system, which often manage their own packages. Virtual environments allow for a lightweight way to manage dependencies without affecting the global Python installation [pip__environments.md]."
+300w_k3,q38,True,False,False,True,False,True,2.123353299975861,1583,56,"To upgrade a specific package in your tool environment using uv, you can use the command: ```console $ uv tool upgrade <package-name> ``` For example, to upgrade Ruff, you would run: ```console $ uv tool upgrade ruff ``` [guides__tools.md]"
+300w_k3,q39,True,False,False,True,True,True,3.9499477999925148,1397,218,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Install uv**: Use the action `astral-sh/setup-uv` to install uv in your workflow.
+2. **Build the package**: Run `uv build` to build your package.
+3. **Run smoke tests**: Optionally, run smoke tests on the built distributions using `uv run`.
+4. **Upload distributions as artifacts**: Use the `actions/upload-artifact` action to upload the built distributions from the `dist/` directory.
+5. **Create the environment**: Define the environment in your GitHub repository settings under ""Settings"" -> ""Environments"".
+6. **Add a Trusted Publisher**: Configure a Trusted Publisher in your PyPI project settings to match your GitHub configuration.
+7. **Tag a release**: Tag your release in Git using a version that starts with `v` and push the tags.
+
+Finally, run `uv publish` to publish the package along with its attestations [guides__integration__github.md]."
+300w_k3,q40,True,False,False,False,True,True,5.05564940001932,1717,320,"Project dependencies in uv are managed through several fields in the `pyproject.toml` file:
+
+1. **Define Dependencies**: Use `project.dependencies` for published dependencies and `project.optional-dependencies` for optional dependencies. Local development dependencies can be defined in `dependency-groups`, and alternative sources can be specified in `tool.uv.sources` [concepts__projects__dependencies.md].
+
+2. **Adding Dependencies**: Use the command `uv add <dependency>` to add a dependency. You can specify flags like `--dev`, `--group`, or `--optional` to add dependencies to specific fields. You can also add constraints directly [concepts__projects__dependencies.md].
+
+3. **Removing Dependencies**: Use `uv remove <dependency>` to remove a dependency. The same flags can be used to specify which table to remove from [concepts__projects__dependencies.md].
+
+4. **Changing Dependencies**: To change an existing dependency's constraints, use `uv add ""<dependency>""` with the new constraint. To force an update to the latest version within the constraints, use `--upgrade-package <name>` [concepts__projects__dependencies.md].
+
+5. **Importing from Requirements Files**: You can import dependencies from a `requirements.txt` file using the `-r` option [concepts__projects__dependencies.md].
+
+6. **Handling Conflicts**: If there are conflicting dependencies, uv will fail to resolve them. You can declare conflicts explicitly in the `tool.uv` section to allow separate resolution [concepts__resolution.md]."
+300w_k3,h01,True,False,False,True,True,True,3.1664198999933433,1371,113,"`uvx` is used to invoke a tool without installing it, creating a temporary, isolated virtual environment for each execution. In contrast, `uv tool install` installs the tool, making its executables available on the `PATH` and using a persistent virtual environment that is not removed after the command completes. This means `uvx` is more suitable for one-off invocations, while `uv tool install` is useful when the tool needs to be available for other programs or scripts on the system [concepts__tools.md][guides__tools.md]."
+300w_k3,h02,True,False,False,False,True,True,2.540103300008923,1751,112,"You can install only the dependencies and skip your own project by using the `--no-install-project` flag with the `uv sync` command. For example:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+```
+
+This will install the dependencies of the project but not the project itself, which helps improve layer caching in Docker builds [guides__integration__docker.md]."
+300w_k3,h03,True,False,False,True,False,True,1.4318184000148904,509,46,"You can shrink your CI cache by running the command `uv cache prune`, which removes all unused cache entries and centralized project environments. This command is safe to run periodically to keep the cache directory clean [concepts__cache.md]."
+300w_k3,h04,True,False,False,True,True,True,2.0459290000144392,1218,50,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13. It only supports upgrades to the latest patch release within the same minor version [concepts__python-versions.md]."
+300w_k3,h05,True,False,False,True,False,True,1.5637917999993078,1687,38,You should place the `uv.toml` file in `%PROGRAMDATA%\uv\uv.toml` to apply it to all your projects on Windows [concepts__configuration-files.md].
+300w_k3,h06,True,False,False,True,True,True,2.2276430999918375,1616,90,"To install a dependency straight from a GitHub tag with uv, you can use the following command format:
+
+```console
+$ uv add ""httpx @ git+https://github.com/encode/httpx@<tag>""
+```
+
+Replace `<tag>` with the specific tag you want to install. This will add an entry in the `tool.uv.sources` field for the specified tag of the dependency [concepts__projects__dependencies.md]."
+300w_k3,h07,True,False,False,True,True,True,1.2014128000009805,1430,33,"No, uv does not support the `--user` flag. Instead, it recommends the use of virtual environments to isolate package installations [pip__compatibility.md]."
+300w_k3,q41,False,True,True,,,,0.1364185999846086,0,0,I don't know based on the documentation.
+300w_k3,q42,False,True,False,,,,1.0142133999906946,1593,8,I don't know based on the documentation.
+300w_k3,q43,False,True,False,,,,0.9435784000088461,2173,8,I don't know based on the documentation.
+300w_k3,q44,False,True,False,,,,0.8811306999996305,1810,8,I don't know based on the documentation.
+300w_k3,q45,False,True,False,,,,0.8201601000037044,1715,8,I don't know based on the documentation.
+300w_k3,q46,False,True,False,,,,1.2452379000023939,2108,8,I don't know based on the documentation.
+300w_k3,q47,False,True,True,,,,0.1635655999998562,0,0,I don't know based on the documentation.
+300w_k3,q48,False,True,True,,,,0.16388599999481812,0,0,I don't know based on the documentation.
+300w_k5,q01,True,False,False,True,True,True,2.4298440999991726,2212,57,"You can run a Python tool without installing it using the `uvx` command. For example, to run `ruff`, you would use the command: ```console $ uvx ruff ``` This command invokes the tool in a temporary environment without installation [concepts__tools.md]."
+300w_k5,q02,True,False,False,True,True,True,2.4340781000209972,2619,111,"You can specify a Git dependency from a specific branch using the following command: 
+
+```console
+$ uv add git+https://github.com/encode/httpx --branch main
+```
+
+This will add the dependency from the specified branch in the `pyproject.toml` file as follows:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", branch = ""main"" }
+``` 
+
+[source: concepts__projects__dependencies.md]"
+300w_k5,q03,True,False,False,True,True,True,2.3929312999825925,2381,114,"To set up a namespace package using the uv package manager, you need to define the `module-name` in your `pyproject.toml` to include a `.` in the name. This indicates that the package is a namespace package. For example, if you want to package the module `bar` in a namespace package, your configuration might look like this:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""namespace.bar""
+```
+
+Make sure that the directory structure reflects this namespace organization. [concepts__build-backend.md]"
+300w_k5,q04,True,False,False,True,True,True,2.1714536999934353,2110,95,"You can increment the minor version of your package using the `--bump` option with the `uv version` command like this: 
+
+```console
+$ uv version --bump minor hello-world 1.2.3 => 1.3.0
+```
+
+This command will change the version from `1.2.3` to `1.3.0` by bumping the minor component of the version. [guides__package.md]"
+300w_k5,q05,True,False,False,True,True,True,3.6001798000070266,2716,107,"To run a tool at a specific version, use the syntax `command@<version>`. For example: 
+```console
+$ uvx ruff@0.3.0 check
+``` 
+You can also use the `--from` option to specify package versions, like this: 
+```console
+$ uvx --from 'ruff==0.3.0' ruff check
+``` 
+Note that the `@` syntax cannot be used for anything other than an exact version [guides__tools.md]."
+300w_k5,q06,True,False,False,True,True,True,4.781208000000333,2570,201,"At the project level, uv looks for a `pyproject.toml` or `uv.toml` file in the current directory or in the nearest parent directory. If a `pyproject.toml` file is found, uv will read configuration from the `[tool.uv]` table. If both `uv.toml` and `pyproject.toml` files are present, configuration will be read from `uv.toml`, and the `[tool.uv]` section in the accompanying `pyproject.toml` will be ignored.
+
+In contrast, user-level configurations are found in specific directories such as `~/.config/uv/uv.toml` on macOS and Linux, or `%APPDATA%\uv\uv.toml` on Windows. User- and system-level configuration files cannot use the `pyproject.toml` format, and settings from project-level configurations take precedence over user-level configurations, which in turn take precedence over system-level configurations [concepts__configuration-files.md]."
+300w_k5,q07,True,False,False,True,True,True,2.8483872000069823,2329,88,"uv allows upgrading Python versions that it manages to the latest supported patch release using the `python upgrade` command. It does not support upgrading across minor Python versions. After an upgrade, uv will prefer the new version but retain the existing version for use by virtual environments. Virtual environments using the Python version will be automatically upgraded to the new patch version, unless they were created with an explicitly requested patch version [concepts__python-versions.md]."
+300w_k5,q08,True,False,False,True,True,True,3.0623977000068408,2513,141,"In uv, if project-, user-, and system-level configuration files are found, the settings will be merged with project-level configuration taking precedence over user-level configuration, and user-level configuration taking precedence over system-level configuration. If multiple system-level configuration files are found, only the first-discovered file will be used, with XDG taking priority. Settings provided via environment variables take precedence over persistent configuration, and settings provided via the command line take precedence over both. Additionally, uv accepts a `--no-config` command-line argument to disable the discovery of any persistent configuration, and a `--config-file` argument to specify a configuration file to use instead of any discovered files [concepts__configuration-files.md]."
+300w_k5,q09,True,False,False,True,True,True,4.240046699997038,2849,258,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file [getting-started__installation.md]."
+300w_k5,q10,True,False,False,True,True,True,2.762688899994828,2320,118,"uv provides several flags to control the installation of projects and packages during synchronization with `uv sync`:
+
+- `--no-install-project`: Do not install the current project.
+- `--no-install-workspace`: Do not install any workspace members, including the root project.
+- `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the given package(s).
+
+These options allow for partial installations while still ensuring that all dependencies of the target are installed. However, improper use of these flags can lead to a broken environment due to missing dependencies [concepts__projects__sync.md]."
+300w_k5,q11,True,False,False,True,True,True,1.571328399993945,2675,37,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution. [concepts__build-backend.md]"
+300w_k5,q12,True,False,False,True,True,True,1.7919217000016943,2324,56,"If uv rejects a package that pip would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+300w_k5,q13,True,True,False,True,False,,1.0723965000070166,2694,8,I don't know based on the documentation.
+300w_k5,q14,True,False,False,True,True,True,4.128268399974331,2652,132,"To run a script that requires an external package using the uv package manager, you can use the `--with` option to specify the dependency. For example, if your script requires the `rich` package, you would run:
+
+```console
+$ uv run --with rich example.py
+```
+
+You can also specify version constraints if needed:
+
+```console
+$ uv run --with 'rich>12,<13' example.py
+```
+
+If you are running the script in a project, these dependencies will be included in addition to the project's dependencies unless you use the `--no-project` flag to skip the project's dependencies [guides__scripts.md]."
+300w_k5,q15,True,False,False,True,True,True,2.984278199990513,2521,156,"To configure uv to use a private package index instead of the default PyPI, you can add a `[[tool.uv.index]]` entry to your `pyproject.toml` file. Here’s an example configuration:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""  # Optional name for the index.
+url = ""https://download.pytorch.org/whl/cpu""  # Required URL for the index.
+default = true  # Set this to exclude PyPI as the default index.
+```
+
+This configuration will make the specified index the default, thus excluding PyPI from being used unless specified otherwise. You can also use the `--default-index` command-line option to achieve the same effect [concepts__indexes.md]."
+300w_k5,q16,True,False,False,True,True,True,2.4303217999986373,2428,106,"You can test that the package can be installed and imported with `uv run` using the following command: 
+
+```console
+$ uv run --with <PACKAGE> --no-project -- python -c ""import <PACKAGE>""
+```
+
+The `--no-project` flag is used to avoid installing the package from your local project directory. If you have recently installed the package, you may need to include the `--refresh-package <PACKAGE>` option to avoid using a cached version of the package. [guides__package.md]"
+300w_k5,q18,True,False,False,True,True,True,2.854761499998858,3916,127,"When installing a project alongside requirements in a Dockerfile using the uv package manager, it is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s an example:
+
+```dockerfile
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+COPY . .
+RUN uv pip install -e .
+``` 
+
+This approach optimizes build times by leveraging Docker's caching mechanism for layers that do not change frequently [guides__integration__docker.md]."
+300w_k5,q19,True,False,False,True,True,True,1.6591078000201378,2373,59,"To add a local package dependency using uv, you can use the following command:
+
+```console
+$ uv add ""httpx @ ../httpx""
+```
+
+This will update the `tool.uv.sources` table to use the local path during development [concepts__projects__dependencies.md]."
+300w_k5,q20,True,False,False,True,True,True,1.3915955999982543,2457,55,"You can clear the cache for a specific package in uv by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would run `uv cache clean ruff` [concepts__cache.md]."
+300w_k5,q21,True,False,False,True,True,True,2.2778076000104193,2496,90,"uv can export a lockfile to three formats: `requirements.txt`, `pylock.toml`, and `CycloneDX`. You can specify the desired format using the `--format` flag in the export command. For example:
+
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` [concepts__projects__export.md]"
+300w_k5,q22,True,False,False,True,True,True,2.3110933999996632,2470,111,"uv can use the `tool.uv.dependency-metadata` table to provide static metadata for packages with incomplete or incorrect metadata. This allows uv to skip the build step and use the provided metadata instead, enabling it to resolve the package without building it from source. This is particularly useful for packages that do not declare static metadata upfront or when a package is not available in the package index. The metadata can include fields like `name`, `version`, `requires-dist`, `requires-python`, and `provides-extra` [concepts__resolution.md]."
+300w_k5,q23,True,False,False,True,False,True,1.6911043000000063,2355,29,You can list all installed Python versions using the command: ```console $ uv python list --only-installed ``` [guides__install-python.md]
+300w_k5,q24,True,False,False,True,True,True,2.7844029999978375,2377,124,"uv provides support for legacy setuptools scripts on Windows, specifically for scripts with the `.ps1`, `.cmd`, and `.bat` extensions. When running a Command Prompt script, you can use the `uv run` command without needing to specify the extension, as uv will automatically look for files ending in those extensions in order of execution. For example, you can run a script like this: 
+
+```console
+$ uv run --with nuitka==2.6.7 -- nuitka --version
+``` 
+
+This allows for clean execution of legacy scripts in the Windows environment [concepts__projects__run.md]."
+300w_k5,q25,True,False,False,True,True,True,4.168747200019425,2378,199,"Workspaces in uv facilitate the development of multiple interconnected packages within a single repository by allowing for the following benefits:
+
+1. **Isolation and Separation of Concerns**: Workspaces help enforce isolation between packages, enabling independent testing and development of each package.
+2. **Shared Lockfile**: A single lockfile ensures that the workspace operates with a consistent set of dependencies across all members.
+3. **Simplified Dependency Management**: Dependencies between workspace members can be managed easily, with the ability to define them in a centralized manner.
+4. **Support for Multiple Package Types**: Both applications and libraries can be included as workspace members, providing flexibility in project structure.
+5. **Convenient Command Execution**: Commands like `uv run` and `uv sync` operate on the workspace root by default, simplifying the execution of tasks across multiple packages.
+
+These features make workspaces particularly useful for complex codebases that require multiple packages to work together seamlessly [concepts__projects__workspaces.md]."
+300w_k5,q26,True,False,False,True,True,True,1.7419413000170607,3763,47,"uv provides two types of Docker images: distroless images and derived images. Distroless images contain only the uv binaries, while derived images include an operating system with uv pre-installed. [guides__integration__docker.md]"
+300w_k5,q27,True,False,False,False,True,True,3.8702642999996897,2333,264,"uv provides the following commands for managing Python versions:
+
+1. To install the latest Python version: 
+   ```console
+   $ uv python install
+   ```
+
+2. To install a specific Python version: 
+   ```console
+   $ uv python install 3.12
+   ```
+
+3. To install multiple Python versions: 
+   ```console
+   $ uv python install 3.11 3.12
+   ```
+
+4. To install an alternative Python implementation (e.g., PyPy): 
+   ```console
+   $ uv python install pypy@3.10
+   ```
+
+5. To reinstall uv-managed Python versions: 
+   ```console
+   $ uv python install --reinstall
+   ```
+
+6. To view available and installed Python versions: 
+   ```console
+   $ uv python list
+   ```
+
+7. To upgrade a Python version to the latest supported patch release: 
+   ```console
+   $ uv python upgrade 3.12
+   ```
+
+8. To upgrade all installed Python versions: 
+   ```console
+   $ uv python upgrade
+   ``` 
+
+These commands allow users to install, reinstall, list, and upgrade Python versions managed by uv [guides__install-python.md][concepts__python-versions.md]."
+300w_k5,q28,True,False,False,True,True,True,2.320216400024947,2411,89,"You can create a new Python project using the `uv init` command. For example, you can run:
+
+```console
+$ uv init hello-world
+$ cd hello-world
+```
+
+Alternatively, you can initialize a project in the working directory by running:
+
+```console
+$ mkdir hello-world
+$ cd hello-world
+$ uv init
+```
+
+This will create the necessary files and directories for your project [guides__projects.md]."
+300w_k5,q29,True,False,False,True,True,True,1.9712830999924336,2019,59,"You can check if the lockfile is up-to-date by passing the `--check` flag to `uv lock`: 
+
+```console
+$ uv lock --check
+```
+
+This is equivalent to the `--locked` flag for other commands. [concepts__projects__sync.md]"
+300w_k5,q30,True,False,False,True,True,True,3.090703299996676,2992,176,"You can configure dependencies for different platforms by using environment markers in the `tool.uv.sources` section of your `pyproject.toml`. For example, you can specify different indexes for each platform using conditions like `sys_platform`. Here’s a sample configuration:
+
+```toml
+[tool.uv.sources]
+torch = [ { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" }, { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" }, ]
+torchvision = [ { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" }, { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" }, ]
+```
+
+This configuration uses CPU-only builds on non-Linux platforms and CUDA-enabled builds on Linux [guides__integration__pytorch.md]."
+300w_k5,q31,True,False,False,True,False,True,2.4984197999874596,2451,109,"To ensure that your Python environment matches the specifications in the lockfile when using the uv package manager, you should use the `uv sync` command. This command will synchronize your environment with the exact resolved versions specified in the `uv.lock` file. Additionally, you should check the lockfile into version control to maintain consistent and reproducible installations across machines. The lockfile is automatically created and updated during uv invocations that use the project environment, such as `uv sync` and `uv run` [concepts__projects__layout.md]."
+300w_k5,q32,True,False,False,True,True,True,2.9614542999770492,2260,127,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a dedicated kernel for your project. This can be done by installing `ipykernel` as a development dependency and then creating the kernel for your project. After that, when you run the Jupyter server with `uv run --with jupyter jupyter lab`, any packages installed from within the notebook will be added to the project's virtual environment. You can install packages using `!uv add package_name` or `!uv pip install package_name` within the notebook. [guides__integration__jupyter.md]"
+300w_k5,q33,True,False,False,True,True,True,2.4221248000103515,2460,132,"To optimize cache usage for package installation in continuous integration environments using uv, you can use the `uv cache prune --ci` command. This command removes all pre-built wheels and unzipped source distributions from the cache while retaining any wheels that were built from source. It is recommended to run this command at the end of your continuous integration job to ensure maximum cache efficiency [concepts__cache.md]. Additionally, you can enable caching in your CI workflow by using the `astral-sh/setup-uv` action with the `enable-cache: true` option or manage the cache manually with the `actions/cache` action [guides__integration__github.md]."
+300w_k5,q34,True,False,False,True,True,True,1.4372533000132535,2694,77,"The `pyproject.toml` file contains metadata about your project, including its name, version, description, authors, Python version requirements, and dependencies. It is used to specify project details and configuration options for uv. You can edit this file manually or use commands like `uv add` and `uv remove` to manage your project from the terminal [guides__projects.md]."
+300w_k5,q35,True,False,False,True,True,True,3.3875140999734867,2758,108,"You can install executables from multiple packages using the `--with-executables-from` option. For example, to install executables from `ansible`, `ansible-core`, and `ansible-lint`, you would use the following command:
+
+```console
+$ uv tool install --with-executables-from ansible-core,ansible-lint ansible
+```
+
+This will install all executables from the specified packages into the same tool environment, making them available on the `PATH` [concepts__tools.md]."
+300w_k5,q36,True,False,False,True,True,True,2.4335867000045255,2500,105,"You can provide dependency metadata for a package that does not declare it upfront by using the `tool.uv.dependency-metadata` table in your `pyproject.toml`. For example, you can include the metadata like this:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package-name""
+version = ""package-version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows uv to skip the build step and use the provided metadata instead [concepts__resolution.md]."
+300w_k5,q37,True,False,False,True,True,True,1.9399963000032585,1859,75,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, preventing modifications to the system's Python environment and allowing for better dependency management. This is especially important for Python installations that come with the operating system, which often manage their packages themselves. Virtual environments provide a lightweight way to achieve this isolation [pip__environments.md]."
+300w_k5,q38,True,False,False,True,False,True,1.7750595999823418,2668,73,"To upgrade a specific package in your tool environment, use the command: 
+
+```console
+$ uv tool upgrade <package-name>
+```
+
+For example, to upgrade the package `black`, you would run:
+
+```console
+$ uv tool upgrade black
+```
+
+Tool upgrades will respect the version constraints provided when installing the tool. [guides__tools.md]"
+300w_k5,q39,True,False,False,True,True,True,7.304752600000938,2756,400,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Install uv**: Use the `astral-sh/setup-uv` action to install uv in your GitHub Actions workflow.
+   ```yaml
+   - name: Install uv
+     uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+   ```
+
+2. **Build the package**: Run the `uv build` command to build your package.
+   ```yaml
+   - name: Build
+     run: uv build
+   ```
+
+3. **Run smoke tests** (optional but recommended): Test the built distributions.
+   ```yaml
+   - name: Smoke test (wheel)
+     run: uv run --isolated --no-project --with dist/*.whl tests/smoke_test.py
+   - name: Smoke test (source distribution)
+     run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py
+   ```
+
+4. **Upload distributions as artifacts**: Use the `actions/upload-artifact` action to upload the built distributions.
+   ```yaml
+   - name: Upload distributions as artifacts
+     uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+     with:
+       name: dist
+       path: dist/
+   ```
+
+5. **Publish the package**: Run the `uv publish` command to publish your package.
+   ```yaml
+   - name: Publish
+     run: uv publish
+   ```
+
+6. **Create a GitHub environment**: Define the environment in your GitHub repository settings under ""Settings"" -> ""Environments"".
+
+7. **Add a Trusted Publisher**"
+300w_k5,q40,True,False,False,False,True,True,3.9644108999927994,2431,244,"To manage project dependencies using the uv package manager, you can define dependencies in several fields within your `pyproject.toml` file:
+
+1. **Published Dependencies**: Use the `project.dependencies` field for your main dependencies.
+2. **Optional Dependencies**: Use the `project.optional-dependencies` field for optional dependencies or ""extras"".
+3. **Development Dependencies**: Use `dependency-groups` for local development dependencies.
+4. **Alternative Sources**: Use `tool.uv.sources` for alternative sources during development.
+
+You can add dependencies using the command:
+```console
+$ uv add <dependency>
+```
+You can also specify flags like `--dev`, `--group`, or `--optional` to add dependencies to specific fields. To remove a dependency, use:
+```console
+$ uv remove <dependency>
+```
+To change an existing dependency, you can re-add it with new constraints. If you need to import dependencies from a `requirements.txt` file, use:
+```console
+$ uv add -r requirements.txt
+```
+For more details, you can directly edit the `pyproject.toml` file or use the commands provided [concepts__projects__dependencies.md]."
+300w_k5,h01,True,False,False,True,True,True,5.514895500004059,2228,111,"`uvx` is used to invoke a tool without installing it, creating a temporary, isolated environment for that execution. In contrast, `uv tool install` installs the tool, making its executables available on the `PATH` and creating a persistent virtual environment that is not removed after the command completes. The environment created by `uv tool install` will only be deleted if the tool is uninstalled, while the environment used by `uvx` is treated as disposable and can be deleted with `uv cache clean` [concepts__tools.md]."
+300w_k5,h02,True,False,False,False,True,True,14.84925060000387,3504,123,"You can use the `--no-install-project` flag with the `uv sync` command to install only the dependencies and skip your own project. This helps improve layer caching in Docker. For example:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+``` 
+
+This command installs the dependencies defined in the `uv.lock` file without installing the project itself, allowing for better caching of layers [guides__integration__docker.md]."
+300w_k5,h03,True,False,False,True,False,True,1.4390902000013739,509,46,"You can shrink your CI cache by running the command `uv cache prune`, which removes all unused cache entries and centralized project environments. This command is safe to run periodically to keep the cache directory clean [concepts__cache.md]."
+300w_k5,h04,True,False,False,True,True,True,1.6201021000160836,2178,50,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13. It only supports upgrades to the latest patch release within the same minor version [concepts__python-versions.md]."
+300w_k5,h05,True,False,False,True,False,True,1.38242840001476,2703,38,You should place the `uv.toml` file in the system-level configuration directory at `%PROGRAMDATA%\uv\uv.toml` on Windows. [concepts__configuration-files.md]
+300w_k5,h06,True,False,False,True,True,True,2.501273800007766,2614,89,"To install a dependency straight from a GitHub tag with uv, you can use the following command format:
+
+```console
+$ uv add ""httpx @ git+https://github.com/encode/httpx@<tag>""
+```
+
+Replace `<tag>` with the specific tag you want to install. This will add an entry in the `pyproject.toml` with the specified Git source and tag [concepts__projects__dependencies.md]."
+300w_k5,h07,True,False,False,True,True,True,1.0229197000153363,2369,33,"No, uv does not support the `--user` flag. Instead, it recommends the use of virtual environments to isolate package installations [pip__compatibility.md]."
+300w_k5,q41,False,True,True,,,,0.20129940001061186,0,0,I don't know based on the documentation.
+300w_k5,q42,False,True,False,,,,1.0643642999930307,2754,8,I don't know based on the documentation.
+300w_k5,q43,False,True,False,,,,1.119509400014067,3303,8,I don't know based on the documentation.
+300w_k5,q44,False,True,False,,,,0.9555177000002004,3312,8,I don't know based on the documentation.
+300w_k5,q45,False,True,False,,,,1.0523850999888964,2720,8,I don't know based on the documentation.
+300w_k5,q46,False,True,False,,,,1.0300003000011202,2738,8,I don't know based on the documentation.
+300w_k5,q47,False,True,True,,,,0.14390039999852888,0,0,I don't know based on the documentation.
+300w_k5,q48,False,True,True,,,,0.18579660000978038,0,0,I don't know based on the documentation.
+500w_k3,q01,True,False,False,True,True,True,3.5333688000100665,2404,51,"You can run a Python tool without installing it using the command `uv tool run`, or its alias `uvx`. This will invoke the tool and install its dependencies in a temporary virtual environment isolated from the current project. [concepts__tools.md]"
+500w_k3,q02,True,False,False,True,True,True,2.7797889999928884,3120,123,"To specify a Git dependency from a specific branch using the uv package manager, you can use the `--branch` option with the `uv add` command. For example:
+
+```console
+$ uv add git+https://github.com/encode/httpx --branch main
+```
+
+This will result in a `pyproject.toml` entry like this:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", branch = ""main"" }
+``` [concepts__projects__dependencies.md]"
+500w_k3,q03,True,False,False,True,True,True,2.37374959999579,2049,275,"To set up a namespace package using the uv package manager, you need to structure your project with a `module-name` that includes a `.` to indicate the shared namespace. For example, if you want to package the module `bar` in the shared namespace `foo`, your project structure should look like this:
+
+```
+pyproject.toml
+src
+└── foo
+    └── bar
+        └── __init__.py
+```
+
+Then, your `pyproject.toml` should include the following configuration:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""foo.bar""
+```
+
+If you have a complex namespace package with more than one root module, you can set `module-name` to a list of names. For example:
+
+```toml
+[tool.uv.build-backend]
+module-name = [""foo"", ""bar""]
+```
+
+Additionally, for packages with many modules or complex namespaces, you can use the `namespace = true` option to avoid explicitly declaring each module name. For example:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""foo""
+namespace = true
+```
+
+However, using `namespace = true` disables safety checks, so it's recommended to use an explicit list of module names outside of legacy projects [concepts__build-backend.md]."
+500w_k3,q04,True,False,False,True,True,True,2.1857792000228073,2023,88,"You can increment the minor version of your package using the command: 
+
+```console
+$ uv version --bump minor <PACKAGE>
+```
+
+For example, if your package is named `hello-world`, you would run:
+
+```console
+$ uv version --bump minor hello-world
+``` 
+
+This will change the version from `1.2.3` to `1.3.0` [guides__package.md]."
+500w_k3,q05,True,False,False,True,True,True,3.2502479999966454,2563,171,"To run a tool at a specific version, use the syntax `command@<version>`. For example: 
+
+```console
+$ uvx ruff@0.3.0 check
+```
+
+To run a tool at the latest version, use `command@latest`:
+
+```console
+$ uvx ruff@latest check
+```
+
+You can also use the `--from` option to specify package versions:
+
+```console
+$ uvx --from 'ruff==0.3.0' ruff check
+```
+
+Or to constrain to a range of versions:
+
+```console
+$ uvx --from 'ruff>0.2.0,<0.3.0' ruff check
+```
+
+Note that the `@` syntax cannot be used for anything other than an exact version [guides__tools.md]."
+500w_k3,q06,True,False,False,True,True,True,3.8693951000168454,2421,183,"At the project level, uv looks for `pyproject.toml` or `uv.toml` files. The `pyproject.toml` file must contain a `[tool.uv]` table for configuration, while the `uv.toml` file follows a similar structure but omits the `[tool.uv]` prefix. If both files are present, `uv.toml` takes precedence over `pyproject.toml` [concepts__configuration-files.md].
+
+In contrast, user-level configurations are stored in files like `~/.config/uv/uv.toml` on macOS and Linux, or `%APPDATA%\uv\uv.toml` on Windows, and they cannot use the `pyproject.toml` format. User-level configurations are ignored for tool commands that operate at the user level, which exclusively read from user-level and system-level configurations [concepts__configuration-files.md]."
+500w_k3,q07,True,False,False,True,True,True,2.5502786000142805,1962,101,"uv allows transparently upgrading Python versions to the latest patch release for uv-managed Python versions. However, it does not support upgrading across minor Python versions, as this can affect dependency resolution. After an upgrade, uv will prefer the new version but retain the existing version for use by virtual environments. Virtual environments using the Python version will be automatically upgraded to the new patch version, unless they were created with an explicitly requested patch version, which will not be upgraded automatically. [concepts__python-versions.md]"
+500w_k3,q08,True,True,False,False,False,,1.0035035999899264,2535,8,I don't know based on the documentation.
+500w_k3,q09,True,False,False,True,True,True,4.103464099986013,2171,263,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file to apply the changes. [getting-started__installation.md]"
+500w_k3,q10,True,False,False,True,True,False,4.71812500001397,2275,247,"uv provides several options to control the installation of projects and packages during synchronization:
+
+1. `--no-install-project`: Do not install the current project.
+2. `--no-install-workspace`: Do not install any workspace members, including the root project.
+3. `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the specified package(s).
+4. `--inexact`: Retain extraneous packages during installation.
+5. `--exact`: Enable exact syncing with `uv run`, removing extraneous packages.
+6. `--extra <extra>`: Include optional dependencies (extras) during sync.
+7. `--all-extras`: Quickly enable all extras.
+8. `--no-dev`: Exclude the `dev` group from installation.
+9. `--only-dev`: Install the `dev` group without the project and its dependencies.
+10. `--all-groups`, `--no-default-groups`, `--group <name>`, `--only-group <name>`, `--no-group <name>`: Manage additional dependency groups during sync.
+
+These options allow for flexible control over what gets installed and how dependencies are handled during the synchronization process [concepts__projects__sync.md]."
+500w_k3,q11,True,False,False,True,True,True,2.812218599981861,2840,37,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution. [concepts__build-backend.md]"
+500w_k3,q12,True,False,False,True,True,True,1.98299719998613,2593,56,"If uv rejects a package that pip would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+500w_k3,q13,True,False,False,True,True,True,3.907896200020332,2738,159,"To add extra build dependencies for a specific package in your project using uv, you can define them in the `project.optional-dependencies` section of your `pyproject.toml` file. For example:
+
+```toml
+[project]
+name = ""project""
+version = ""0.1.0""
+dependencies = [""cchardet""]
+
+[project.optional-dependencies]
+build = [""setuptools"", ""cython""]
+```
+
+Then, you would first sync with the `build` optional group to install the build dependencies, and then sync again without it to remove the build dependencies:
+
+```console
+$ uv sync --extra build
+$ uv sync -
+```
+
+This approach allows you to separate the build dependencies from the packages that require them [concepts__projects__config.md]."
+500w_k3,q14,True,False,False,True,True,True,5.273370700015221,2677,131,"To run a script that requires an external package using the uv package manager, you need to specify the dependency when executing the script. For example, if your script requires the `rich` package, you can run it with the following command:
+
+```console
+$ uv run --with rich example.py
+```
+
+If you need to specify version constraints for the dependency, you can do so like this:
+
+```console
+$ uv run --with 'rich>12,<13' example.py
+```
+
+Make sure to declare the dependencies explicitly, as uv prefers to create environments on-demand instead of using a long-lived virtual environment [guides__scripts.md]."
+500w_k3,q15,True,False,False,True,True,True,3.601268300000811,2569,169,"To configure uv to use a private package index instead of the default PyPI, you can add an entry to your `pyproject.toml` file under `[[tool.uv.index]]`. Here’s an example configuration:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""
+url = ""https://download.pytorch.org/whl/cpu""
+```
+
+You can also set the `default = true` option on the index entry to exclude PyPI from the list of indexes:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""
+url = ""https://download.pytorch.org/whl/cpu""
+default = true
+```
+
+Additionally, you can use the `--index` command-line option to specify the index when running uv commands. [concepts__indexes.md]"
+500w_k3,q16,True,True,False,False,False,,0.9713316000124905,2410,8,I don't know based on the documentation.
+500w_k3,q18,True,False,False,True,True,True,1.7706944000092335,3418,136,"To handle the installation of requirements and your project in a Dockerfile when using the uv package manager, it is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s an example:
+
+```dockerfile
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+COPY . .
+RUN uv pip install -e .
+``` 
+
+This approach ensures that the requirements are installed first, allowing for better caching and faster builds when the project code changes frequently. [guides__integration__docker.md]"
+500w_k3,q19,True,False,False,True,True,True,2.165503299998818,2918,94,"To add a local package dependency using uv, you can use the `--editable` flag with the path to the package. For example:
+
+```console
+$ uv add --editable ./path/foo
+```
+
+This will create an editable installation of the local package. If you want to opt-out of using an editable dependency, you can use:
+
+```console
+$ uv add --no-editable ./path/foo
+``` 
+
+[concepts__projects__dependencies.md]"
+500w_k3,q20,True,False,False,True,True,True,1.7582371000025887,2175,55,"You can clear the cache for a specific package in uv by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would run `uv cache clean ruff` [concepts__cache.md]."
+500w_k3,q21,True,False,False,True,True,True,2.590338599984534,1795,90,"uv can export a lockfile to three formats: `requirements.txt`, `pylock.toml`, and `CycloneDX`. You can specify the desired format using the `--format` flag in the export command. For example:
+
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` [concepts__projects__export.md]"
+500w_k3,q22,True,False,False,True,True,True,2.165287800016813,2338,83,"uv can use the `tool.uv.dependency-metadata` table to provide static metadata for packages with incomplete or incorrect metadata. This allows uv to skip the build step and use the provided metadata instead, enabling it to resolve the package without building it from source. This is particularly useful for packages that do not declare static metadata upfront or when a package's metadata is incorrect or incomplete [concepts__resolution.md]."
+500w_k3,q23,True,False,False,True,False,True,1.656422100000782,2577,52,"To list all installed Python versions using the uv package manager, you can use the following command:
+
+```console
+$ uv python list --only-installed
+```
+
+This command will exclude downloads and only show installed Python versions [concepts__python-versions.md]."
+500w_k3,q24,True,False,False,True,True,True,2.639822800003458,2268,122,"uv supports running legacy setuptools scripts on Windows, specifically those with the `.ps1`, `.cmd`, and `.bat` extensions. These scripts are available via `$(uv tool dir)\<tool-name>\Scripts`. You can run a Command Prompt script without specifying the extension, as uv will automatically look for files ending in `.ps1`, `.cmd`, and `.bat` in that order of execution. For example, you can run a script like this: ```console $ uv run --with nuitka==2.6.7 -- nuitka --version ``` [concepts__projects__run.md]"
+500w_k3,q25,True,False,False,True,True,True,3.504820900008781,2233,167,"Workspaces in uv facilitate the development of multiple interconnected packages within a single repository, allowing for the following benefits:
+
+1. **Organization**: They help organize large codebases by splitting them into multiple packages with common dependencies.
+2. **Shared Lockfile**: Workspaces share a single lockfile, ensuring consistent dependencies across all members.
+3. **Dependency Management**: They allow for easier management of dependencies, as `uv lock` operates on the entire workspace at once.
+4. **Isolation and Separation of Concerns**: Workspaces enforce isolation and separation of concerns, which is beneficial as codebases grow in complexity.
+5. **Testing Flexibility**: They enable testing of the core library independently of the command-line interface and vice versa, as seen in uv's own structure [concepts__projects__workspaces.md]."
+500w_k3,q26,True,False,False,True,True,True,1.868957499973476,3433,43,"uv provides two types of Docker images: distroless images, which contain only the uv binaries, and derived images, which include an operating system with uv pre-installed. [guides__integration__docker.md]"
+500w_k3,q27,True,False,False,False,True,True,5.313022699992871,2447,247,"uv provides the following commands for managing Python versions:
+
+1. To install the latest Python version: 
+   ```console
+   $ uv python install
+   ```
+
+2. To install a specific Python version: 
+   ```console
+   $ uv python install 3.12
+   ```
+
+3. To install multiple Python versions: 
+   ```console
+   $ uv python install 3.11 3.12
+   ```
+
+4. To reinstall uv-managed Python versions: 
+   ```console
+   $ uv python install --reinstall
+   ```
+
+5. To list installed and available Python versions: 
+   ```console
+   $ uv python list
+   ```
+
+6. To upgrade a specific Python version to the latest patch release: 
+   ```console
+   $ uv python upgrade 3.12
+   ```
+
+7. To upgrade all installed Python versions: 
+   ```console
+   $ uv python upgrade
+   ```
+
+8. To find a Python executable: 
+   ```console
+   $ uv python find
+   ``` 
+
+These commands allow users to install, upgrade, and manage Python versions effectively [concepts__python-versions.md][guides__install-python.md]."
+500w_k3,q28,True,True,False,False,False,,1.3628193000040483,2405,8,I don't know based on the documentation.
+500w_k3,q29,True,False,False,True,True,True,1.7295028000080492,2403,55,You can check if the lockfile is up-to-date by passing the `--check` flag to `uv lock`: ```console $ uv lock --check ``` This is equivalent to the `--locked` flag for other commands. [concepts__projects__sync.md]
+500w_k3,q30,True,False,False,True,True,True,5.701527099998202,2473,197,"You can configure dependencies for different platforms when using PyTorch with uv by using the `tool.uv.sources` section in your `pyproject.toml` file. You can specify different indexes for each platform using environment markers. For example, you can set up your dependencies to use CPU-only builds on non-Linux platforms and CUDA-enabled builds on Linux like this:
+
+```toml
+[tool.uv.sources]
+torch = [
+    { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" },
+    { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" },
+]
+torchvision = [
+    { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" },
+    { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" },
+]
+```
+
+This configuration allows you to manage dependencies based on the platform being used [guides__integration__pytorch.md]."
+500w_k3,q31,True,False,False,True,False,True,2.362491800013231,2283,101,"You can ensure that your Python environment matches the specifications in the lockfile by using the `uv run` command. Prior to every `uv run` invocation, uv will verify that the lockfile is up-to-date with the `pyproject.toml`, and that the environment is up-to-date with the lockfile, keeping your project in sync without the need for manual intervention. This guarantees that your command is run in an environment with all required dependencies at their locked versions [guides__projects.md]."
+500w_k3,q32,True,False,False,True,True,True,4.104886300017824,1847,243,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a dedicated kernel for your project. This involves installing `ipykernel` as a development dependency and then creating the kernel for your project. Here are the steps:
+
+1. Install `ipykernel` as a dev dependency:
+   ```console
+   $ uv add --dev ipykernel
+   ```
+
+2. Create the kernel for your project:
+   ```console
+   $ uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=project
+   ```
+
+3. Start the Jupyter server:
+   ```console
+   $ uv run --with jupyter jupyter lab
+   ```
+
+4. When creating a notebook, select the `project` kernel from the dropdown.
+
+With this setup, you can use `!uv add pydantic` to add `pydantic` to the project's dependencies, or `!uv pip install pydantic` to install it into the project's virtual environment. Both commands will make `import pydantic` work within the notebook. [guides__integration__jupyter.md]"
+500w_k3,q33,True,False,False,True,True,True,1.6005449000222143,2178,71,"To optimize cache usage for package installation in continuous integration environments using uv, you can run the `uv cache prune --ci` command at the end of your CI job. This command removes all pre-built wheels and unzipped source distributions from the cache while retaining any wheels that were built from source, ensuring maximum cache efficiency [concepts__cache.md]."
+500w_k3,q34,True,False,False,True,True,True,1.926371699984884,2368,63,"The `pyproject.toml` file in a project using uv defines the project metadata, including the project's name and version, and is used to specify dependencies, Python version requirements, build systems, and entry points. It is essential for identifying the root directory of a project [concepts__projects__layout.md]."
+500w_k3,q35,True,False,False,True,True,True,2.3201728999847546,2709,99,"You can install executables from multiple packages using the `--with-executables-from` option. For example, you can specify additional packages whose executables should be installed alongside the main tool like this:
+
+```console
+$ uv tool install --with-executables-from <package1>,<package2> <tool-package>
+```
+
+This will install all executables from the specified packages into the same tool environment, making them available on the `PATH` [concepts__tools.md]."
+500w_k3,q36,True,False,False,True,True,True,2.751911500003189,2698,124,"You can provide dependency metadata for a package that does not declare it upfront by using the `tool.uv.dependency-metadata` table in your `pyproject.toml`. For example, you can include the package name, version, and its required dependencies like this:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package_name""
+version = ""package_version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows uv to skip the build step and use the provided metadata instead, facilitating resolution without needing to build the package from source [concepts__resolution.md]."
+500w_k3,q37,True,False,False,True,True,True,1.7217165999754798,2256,74,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, which is considered best practice. This isolation helps avoid modifying the Python installation's environment, especially for system-installed Python versions that manage their packages themselves. Virtual environments allow for a lightweight way to manage dependencies without affecting the global Python environment [pip__environments.md]."
+500w_k3,q38,True,False,False,True,False,True,2.2042047000140883,2110,83,"To upgrade a specific package in your tool environment using uv, you can use the command: 
+
+```console
+$ uv tool upgrade <package-name>
+```
+
+For example, to upgrade the package `black`, you would run:
+
+```console
+$ uv tool upgrade black --upgrade-package <specific-package>
+```
+
+This command will respect the version constraints provided when installing the tool. [concepts__tools.md]"
+500w_k3,q39,True,False,False,True,True,True,4.206341300014174,2504,205,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Create a Release Workflow**: Add a release workflow to your project in `.github/workflows/release.yml`.
+
+2. **Define Trigger**: Set the workflow to trigger on version tags.
+
+3. **Build Job**: Create a `build` job that:
+   - Checks out the code.
+   - Installs uv.
+   - Builds the package using `uv build`.
+   - Optionally runs smoke tests on the built distributions.
+
+4. **Upload Artifacts**: Use an action to upload the built distributions as artifacts.
+
+5. **Publish Job**: Create a `publish` job that:
+   - Depends on the `build` job.
+   - Installs uv again.
+   - Publishes the package to PyPI using `uv publish`.
+
+This workflow ensures that the publishing step has access to necessary credentials without sharing them with the build step, reducing security risks [guides__integration__github.md]."
+500w_k3,q40,True,False,False,False,True,True,4.232710000011139,2734,268,"To manage project dependencies using the uv package manager, you can define dependencies in several fields within your `pyproject.toml` file:
+
+1. **Published Dependencies**: Use the `project.dependencies` field for your main dependencies.
+2. **Optional Dependencies**: Use the `project.optional-dependencies` field for optional dependencies or ""extras"".
+3. **Local Development Dependencies**: Use `dependency-groups` for local development dependencies.
+4. **Alternative Sources**: Use `tool.uv.sources` for alternative sources during development.
+
+You can add dependencies using the command:
+```console
+$ uv add <dependency>
+```
+You can also specify flags like `--dev`, `--group`, or `--optional` to add dependencies to specific fields. To remove a dependency, use:
+```console
+$ uv remove <dependency>
+```
+To change an existing dependency, you can re-add it with new constraints. If you need to import dependencies from a `requirements.txt` file, use:
+```console
+$ uv add -r requirements.txt
+```
+For more complex scenarios, you can manage conflicts between dependencies by explicitly declaring them in the `tool.uv` section of your `pyproject.toml` file. This ensures that uv can resolve dependencies correctly without conflicts. [concepts__projects__dependencies.md]"
+500w_k3,h01,True,False,False,True,True,True,2.5050984999979846,2446,104,"`uvx` is used to run tools without installing them, creating a temporary virtual environment for each invocation. In contrast, `uv tool install` installs the tool into a persistent environment, making its executables available on the `PATH` and not removing the environment after use. This means `uvx` is suitable for one-off uses, while `uv tool install` is for tools that need to be used frequently or by other programs on the system [concepts__tools.md][guides__tools.md]."
+500w_k3,h02,True,False,False,False,True,True,2.4850067000079434,2760,120,"You can install only the dependencies and skip your own project by using the `--no-install-project` option with the `uv sync` command. Here’s an example Dockerfile snippet:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+```
+
+This approach allows you to cache the layers better since the project itself, which changes frequently, is not included in the initial sync [guides__integration__docker.md]."
+500w_k3,h03,True,True,True,True,False,,0.14210260001709685,0,0,I don't know based on the documentation.
+500w_k3,h04,True,False,False,True,True,True,1.1437445000046864,1968,44,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13, because changing minor versions can affect dependency resolution [concepts__python-versions.md]."
+500w_k3,h05,True,False,False,True,True,True,1.3955237999907695,2917,38,You should place the `uv.toml` file in `%APPDATA%\uv\uv.toml` to apply it to all your projects on Windows [concepts__configuration-files.md].
+500w_k3,h06,True,False,False,True,True,True,3.394215100008296,2880,131,"To install a dependency straight from a GitHub tag with uv, you can use the following command:
+
+```console
+$ uv add git+https://github.com/encode/httpx --tag 0.27.0
+```
+
+This will add the dependency to your project with the specified tag. The corresponding entry in your `pyproject.toml` will look like this:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", tag = ""0.27.0"" }
+``` [concepts__projects__dependencies.md]"
+500w_k3,h07,True,False,False,True,True,True,1.1459685000008903,2506,33,"No, uv does not support the `--user` flag. Instead, it recommends the use of virtual environments to isolate package installations [pip__compatibility.md]."
+500w_k3,q41,False,True,True,,,,0.173512400011532,0,0,I don't know based on the documentation.
+500w_k3,q42,False,True,False,,,,0.9448121000023093,2341,8,I don't know based on the documentation.
+500w_k3,q43,False,True,False,,,,0.9286535000137519,3043,8,I don't know based on the documentation.
+500w_k3,q44,False,True,False,,,,1.1612731000059284,3297,8,I don't know based on the documentation.
+500w_k3,q45,False,True,False,,,,0.8905771999852732,2398,8,I don't know based on the documentation.
+500w_k3,q46,False,True,False,,,,1.1512419000209775,3000,8,I don't know based on the documentation.
+500w_k3,q47,False,True,True,,,,0.14381270000012591,0,0,I don't know based on the documentation.
+500w_k3,q48,False,True,True,,,,0.15148629999021068,0,0,I don't know based on the documentation.
+500w_k5,q01,True,False,False,True,True,True,1.96501200000057,3655,51,"You can run a Python tool without installing it using the `uv tool run` command, or its alias `uvx`. This command will install the tool's dependencies in a temporary virtual environment isolated from the current project. [concepts__tools.md]"
+500w_k5,q02,True,False,False,True,True,True,2.237045300018508,4871,120,"To specify a Git dependency from a specific branch using the uv package manager, you can use the `--branch` option when adding the dependency. For example:
+
+```console
+$ uv add git+https://github.com/encode/httpx --branch main
+```
+
+This will result in a `pyproject.toml` entry like this:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", branch = ""main"" }
+``` [concepts__projects__dependencies.md]"
+500w_k5,q03,True,False,False,True,True,True,3.1378749000141397,3469,267,"To set up a namespace package using the uv package manager, you need to structure your project with a `module-name` that includes a `.` to indicate the shared namespace. For example, if you want to package the module `bar` in the shared namespace `foo`, your project structure should look like this:
+
+```
+pyproject.toml
+src
+└── foo
+    └── bar
+        └── __init__.py
+```
+
+Then, your `pyproject.toml` configuration should include:
+
+```toml
+[tool.uv.build-backend]
+module-name = ""foo.bar""
+```
+
+Additionally, if you have a complex namespace package with more than one root module, you can set `module-name` to a list of names. For example:
+
+```toml
+[tool.uv.build-backend]
+module-name = [""foo"", ""bar""]
+```
+
+If you want to avoid explicitly declaring each module name for packages with many modules or complex namespaces, you can use the `namespace = true` option:
+
+```toml
+[tool.uv.build-backend]
+namespace = true
+```
+
+However, using `namespace = true` disables safety checks, so it's recommended to use an explicit list of module names outside of legacy projects [concepts__build-backend.md]."
+500w_k5,q04,True,False,False,True,True,True,2.1390883999993093,3693,89,"You can increment the minor version of your package using the command: 
+
+```console
+$ uv version --bump minor <package-name>
+```
+
+For example, if your package is named ""hello-world"", you would run:
+
+```console
+$ uv version --bump minor hello-world
+```
+
+This will change the version from `1.2.3` to `1.3.0` [guides__package.md]."
+500w_k5,q05,True,False,False,True,True,True,3.9621555999910925,4173,171,"To run a tool at a specific version, use the syntax `command@<version>`. For example: 
+
+```console
+$ uvx ruff@0.3.0 check
+```
+
+To run a tool at the latest version, use `command@latest`:
+
+```console
+$ uvx ruff@latest check
+```
+
+You can also use the `--from` option to specify package versions:
+
+```console
+$ uvx --from 'ruff==0.3.0' ruff check
+```
+
+Or to constrain to a range of versions:
+
+```console
+$ uvx --from 'ruff>0.2.0,<0.3.0' ruff check
+```
+
+Note that the `@` syntax cannot be used for anything other than an exact version [guides__tools.md]."
+500w_k5,q06,True,False,False,True,True,True,3.4523521000228357,3766,170,"At the project level, uv looks for `pyproject.toml` and `uv.toml` files. The `pyproject.toml` file must contain a `[tool.uv]` table for configuration, while the `uv.toml` file follows a similar structure but omits the `[tool.uv]` prefix. If both files are present, `uv.toml` takes precedence over `pyproject.toml` [concepts__configuration-files.md].
+
+In contrast, user-level configurations are stored in files like `~/.config/uv/uv.toml` on macOS and Linux, or `%APPDATA%\uv\uv.toml` on Windows. User-level configurations are ignored for tool commands that operate at the user level, which exclusively read from user-level and system-level configurations [concepts__configuration-files.md]."
+500w_k5,q07,True,False,False,True,True,True,1.673736899974756,3697,83,"uv allows transparently upgrading Python versions to the latest patch release. It does not support upgrading across minor Python versions. Upgrades are only supported for uv-managed Python versions, and after an upgrade, uv will prefer the new version while retaining the existing version for use by virtual environments. Virtual environments created with an explicitly requested patch version will not be automatically upgraded to a new version [concepts__python-versions.md]."
+500w_k5,q08,True,False,False,True,True,True,1.8957839000213426,4258,192,"In the uv package manager, configuration precedence works as follows:
+
+1. **Project-level configuration** (from `pyproject.toml` or `uv.toml`) takes precedence over user-level configuration.
+2. **User-level configuration** (found in `~/.config/uv/uv.toml` or similar) takes precedence over system-level configuration.
+3. **System-level configuration** (found in `/etc/uv/uv.toml` or similar) is the lowest priority.
+
+If multiple configuration files are found, the settings will be merged, with project-level configuration taking precedence over user-level, and user-level over system-level. If a setting exists in both project and user configurations, the project-level value will be used. For arrays, the values will be concatenated with project-level settings appearing first. Additionally, settings provided via environment variables take precedence over persistent configuration, and command-line arguments take precedence over both [concepts__configuration-files.md]."
+500w_k5,q09,True,False,False,True,True,True,4.031652000005124,3983,263,"To enable shell autocompletion for uv commands, run one of the following commands based on your shell:
+
+- **Bash**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion bash)""' >> ~/.bashrc
+  ```
+
+- **Zsh**: 
+  ```bash
+  echo 'eval ""$(uv generate-shell-completion zsh)""' >> ~/.zshrc
+  ```
+
+- **fish**: 
+  ```bash
+  echo 'uv generate-shell-completion fish | source' > ~/.config/fish/completions/uv.fish
+  ```
+
+- **Elvish**: 
+  ```bash
+  echo 'eval (uv generate-shell-completion elvish | slurp)' >> ~/.elvish/rc.elv
+  ```
+
+- **PowerShell / pwsh**: 
+  ```powershell
+  if (!(Test-Path -Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force }
+  Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+  ```
+
+Then restart the shell or source the shell config file to apply the changes. [getting-started__installation.md]"
+500w_k5,q10,True,False,False,True,True,False,5.118532699998468,3922,271,"uv provides several options to control the installation of projects and packages during synchronization:
+
+1. `--no-install-project`: Do not install the current project.
+2. `--no-install-workspace`: Do not install any workspace members, including the root project.
+3. `--no-install-package <NO_INSTALL_PACKAGE>`: Do not install the specified package(s).
+4. `--inexact`: Retain extraneous packages during synchronization.
+5. `--exact`: Enable exact syncing with `uv run`, which removes extraneous packages.
+6. `--extra <extra>`: Include optional dependencies (extras) during synchronization.
+7. `--all-extras`: Quickly enable all extras.
+8. `--no-dev`: Exclude the `dev` group from synchronization.
+9. `--only-dev`: Install the `dev` group without the project and its dependencies.
+10. `--all-groups`, `--no-default-groups`, `--group <name>`, `--only-group <name>`, `--no-group <name>`: Manage additional dependency groups during synchronization.
+11. `--no-editable`: Install the project in non-editable mode, removing dependency on the source code. 
+
+These options allow for flexible control over what gets installed during the `uv sync` process [concepts__projects__sync.md]."
+500w_k5,q11,True,False,False,True,True,True,1.5934811999904923,4469,37,"By default, uv excludes `__pycache__`, `*.pyc`, and `*.pyo` when building a source distribution. [concepts__build-backend.md]"
+500w_k5,q12,True,False,False,True,True,True,1.4387453999952413,4164,56,"If uv rejects a package that pip would install due to a spec violation, the best course of action is to first attempt to install a newer version of the package; and, if that fails, to report the issue to the package maintainer. [pip__compatibility.md]"
+500w_k5,q13,True,False,False,True,True,True,3.1285864999808837,4302,173,"You can add extra build dependencies for a specific package in your project by defining them in the `project.optional-dependencies` section of your `pyproject.toml` file. For example:
+
+```toml
+[project]
+name = ""project""
+version = ""0.1.0""
+dependencies = [""cchardet""]
+
+[project.optional-dependencies]
+build = [""setuptools"", ""cython""]
+
+[tool.uv]
+no-build-isolation-package = [""cchardet""]
+```
+
+Then, you would first sync with the `build` optional group to install the build dependencies, and then sync again without it to remove the build dependencies:
+
+```console
+$ uv sync --extra build
+$ uv sync -
+``` 
+
+This approach allows you to separate the build dependencies from the packages that require them [concepts__projects__config.md]."
+500w_k5,q14,True,False,False,True,True,True,3.5320875000033993,4503,135,"To run a script that requires an external package using the uv package manager, you need to specify the dependency when executing the script. For example, if your script requires the `rich` package, you can run it with the following command:
+
+```console
+$ uv run --with rich example.py
+```
+
+If you need to specify version constraints for the dependency, you can do so like this:
+
+```console
+$ uv run --with 'rich>12,<13' example.py
+```
+
+Make sure to declare the dependencies explicitly, as uv prefers to create environments on-demand instead of using a long-lived virtual environment with manually managed dependencies [guides__scripts.md]."
+500w_k5,q15,True,False,False,True,True,True,3.472083600005135,3817,165,"To configure uv to use a private package index instead of the default PyPI, you can add a `[[tool.uv.index]]` entry to your `pyproject.toml` file. For example:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""
+url = ""https://download.pytorch.org/whl/cpu""
+```
+
+You can also set the `default = true` option on another index entry to exclude PyPI from the list of indexes:
+
+```toml
+[[tool.uv.index]]
+name = ""pytorch""
+url = ""https://download.pytorch.org/whl/cpu""
+default = true
+```
+
+Additionally, you can use the `--index` command-line option to specify the index when running uv commands [concepts__indexes.md]."
+500w_k5,q16,True,False,False,True,True,True,1.5388498000102118,3697,74,"You can test that the package can be installed and imported with `uv run` using the following command: 
+
+```console
+$ uv run --with <PACKAGE> --no-project -- python -c ""import <PACKAGE>""
+```
+
+The `--no-project` flag is used to avoid installing the package from your local project directory. [guides__package.md]"
+500w_k5,q18,True,False,False,True,True,True,2.2250058999925386,5111,164,"To handle the installation of requirements and your project in a Dockerfile when using the uv package manager, it is best practice to separate copying the requirements from the rest of the source code. This allows the dependencies of the project (which do not change often) to be cached separately from the project itself (which changes very frequently). Here’s an example:
+
+```dockerfile
+# Copy the requirements file into the image
+COPY pyproject.toml .
+
+# Install dependencies
+RUN uv pip install -r pyproject.toml
+
+# Copy the rest of the project into the image
+COPY . .
+
+# Install the project
+RUN uv pip install -e .
+```
+
+This approach ensures that the dependencies are installed first, allowing for better caching and faster builds when the project code changes frequently [guides__integration__docker.md]."
+500w_k5,q19,True,False,False,True,True,True,1.9779314000043087,4710,67,"To add a local package dependency using uv, you can use the `--editable` flag with the path to the package. For example:
+
+```console
+$ uv add --editable ./path/foo
+```
+
+This will create an editable installation of the package located at `./path/foo` [concepts__projects__dependencies.md]."
+500w_k5,q20,True,False,False,True,True,True,1.3408424999797717,3371,53,"You can clear the cache for a specific package by running the command `uv cache clean <package-name>`. For example, to clear the cache for the `ruff` package, you would run `uv cache clean ruff` [concepts__cache.md]."
+500w_k5,q21,True,False,False,True,True,True,3.288623300002655,3071,93,"uv can export a lockfile to the following formats:
+- `requirements.txt`
+- `pylock.toml`
+- `CycloneDX`
+
+You can specify the desired format using the `--format` flag in the export command. For example:
+```console
+$ uv export --format requirements.txt
+$ uv export --format pylock.toml
+$ uv export --format cyclonedx1.5
+``` [concepts__projects__export.md]"
+500w_k5,q22,True,False,False,True,True,True,2.0233864999900106,4157,81,"uv can use the `tool.uv.dependency-metadata` table to provide static metadata for packages with incomplete or incorrect metadata. This allows uv to skip the build step and use the provided metadata instead, enabling it to resolve the package without building it from source. This is particularly useful for packages that do not declare static metadata upfront or when the metadata is incorrect or incomplete [concepts__resolution.md]."
+500w_k5,q23,True,False,False,True,False,True,1.9279383000102825,4115,53,"To list all installed Python versions using the uv package manager, you can use the following command:
+
+```console
+$ uv python list --only-installed
+```
+
+This command will exclude downloads and only show installed Python versions. [concepts__python-versions.md]"
+500w_k5,q24,True,False,False,True,True,True,3.1470635999867227,3536,158,"uv supports running legacy setuptools scripts on Windows, which are available via `$(uv tool dir)\<tool-name>\Scripts`. Currently, only legacy scripts with the `.ps1`, `.cmd`, and `.bat` extensions are supported. For example, to run a Command Prompt script, you can use the command: 
+
+```console
+$ uv run --from nuitka==2.6.7 nuitka.cmd --version
+```
+
+Additionally, you don't need to specify the extension, as `uv` will automatically look for files ending in `.ps1`, `.cmd`, and `.bat` in that order of execution on your behalf:
+
+```console
+$ uv run --from nuitka==2.6.7 nuitka --version
+``` [guides__tools.md]"
+500w_k5,q25,True,False,False,True,True,True,3.7486979000095744,3837,186,"Workspaces in uv facilitate the development of multiple interconnected packages within a single repository by allowing for the following benefits:
+
+1. **Organization**: They help organize large codebases by splitting them into multiple packages with common dependencies.
+2. **Shared Lockfile**: Workspaces share a single lockfile, ensuring that the workspace operates with a consistent set of dependencies.
+3. **Dependency Management**: Dependencies on workspace members are managed through `tool.uv.sources`, allowing for easier resolution and management of inter-package dependencies.
+4. **Isolation and Separation of Concerns**: Workspaces enforce isolation and separation of concerns, which can be beneficial as a codebase grows in complexity.
+5. **Editable Installations**: uv uses editable installations for workspace packages by default, allowing for immediate reflection of changes in the development environment.
+
+These features make it easier to maintain and develop interconnected packages effectively [concepts__projects__workspaces.md]."
+500w_k5,q26,True,False,False,True,True,True,1.6352749000070617,4945,49,"uv provides two types of Docker images: distroless images and derived images. The distroless images contain only the uv binaries, while the derived images include an operating system with uv pre-installed. [guides__integration__docker.md]"
+500w_k5,q27,True,False,False,False,True,True,4.958876999997301,4136,248,"uv provides the following commands for managing Python versions:
+
+1. To install the latest Python version: 
+   ```console
+   $ uv python install
+   ```
+
+2. To install a specific Python version: 
+   ```console
+   $ uv python install 3.12
+   ```
+
+3. To install multiple Python versions: 
+   ```console
+   $ uv python install 3.11 3.12
+   ```
+
+4. To reinstall uv-managed Python versions: 
+   ```console
+   $ uv python install --reinstall
+   ```
+
+5. To upgrade a specific Python version to the latest supported patch release: 
+   ```console
+   $ uv python upgrade 3.12
+   ```
+
+6. To upgrade all installed Python versions: 
+   ```console
+   $ uv python upgrade
+   ```
+
+7. To list installed and available Python versions: 
+   ```console
+   $ uv python list
+   ```
+
+8. To find a Python executable: 
+   ```console
+   $ uv python find
+   ```
+
+These commands allow users to install, upgrade, and manage Python versions effectively [concepts__python-versions.md][guides__install-python.md]."
+500w_k5,q28,True,False,False,True,True,True,2.3085720000090078,4090,99,"You can create a new Python project using the `uv init` command. For example, to create a project named ""hello-world"", you would run:
+
+```console
+$ uv init hello-world
+$ cd hello-world
+```
+
+Alternatively, you can initialize a project in the current working directory by running:
+
+```console
+$ mkdir hello-world
+$ cd hello-world
+$ uv init
+``` 
+
+This will create the necessary files and directories for the project [guides__projects.md]."
+500w_k5,q29,True,False,False,True,True,True,1.710179199988488,3560,55,You can check if the lockfile is up-to-date by passing the `--check` flag to `uv lock`: ```console $ uv lock --check ``` This is equivalent to the `--locked` flag for other commands. [concepts__projects__sync.md]
+500w_k5,q30,True,False,False,True,True,True,3.9280961000185926,4355,188,"You can configure dependencies for different platforms when using PyTorch with uv by using the `tool.uv.sources` section in your `pyproject.toml` file. You can specify different indexes for each platform using environment markers. For example, you can set up your dependencies like this:
+
+```toml
+[tool.uv.sources]
+torch = [
+    { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" },
+    { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" },
+]
+torchvision = [
+    { index = ""pytorch-cpu"", marker = ""sys_platform != 'linux'"" },
+    { index = ""pytorch-cu130"", marker = ""sys_platform == 'linux'"" },
+]
+```
+
+This configuration would use the CPU-only builds on non-Linux platforms and the CUDA-enabled builds on Linux [guides__integration__pytorch.md]."
+500w_k5,q31,True,False,False,True,False,True,2.1317950999946333,3822,82,"You can ensure that your Python environment matches the specifications in the lockfile by using the `uv run` command. This command automatically locks and syncs the project environment before invoking the requested command, ensuring that the environment is up-to-date with the lockfile. Additionally, you can explicitly sync the environment using `uv sync` to ensure it matches the lockfile. [concepts__projects__sync.md]"
+500w_k5,q32,True,False,False,True,True,True,3.390921400015941,3325,216,"To ensure that the packages you install within a Jupyter notebook are added to your project's virtual environment, you should create a dedicated kernel for your project. This involves installing `ipykernel` as a development dependency and then creating the kernel for your project. Here are the steps:
+
+1. Install `ipykernel` as a dev dependency:
+   ```console
+   $ uv add --dev ipykernel
+   ```
+
+2. Create the kernel for your project:
+   ```console
+   $ uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=project
+   ```
+
+3. Start the Jupyter server:
+   ```console
+   $ uv run --with jupyter jupyter lab
+   ```
+
+4. When creating a notebook, select the `project` kernel from the dropdown.
+
+With this setup, any packages you install from within the notebook using `!uv add` or `!uv pip install` will be added to your project's virtual environment. [guides__integration__jupyter.md]"
+500w_k5,q33,True,False,False,True,True,True,2.372591999999713,4060,130,"To optimize cache usage for package installation in continuous integration environments using uv, you can use the `uv cache prune --ci` command, which removes all pre-built wheels and unzipped source distributions from the cache while retaining any wheels built from source. It is recommended to run this command at the end of your continuous integration job to ensure maximum cache efficiency. Additionally, you can enable caching across workflow runs by using the `astral-sh/setup-uv` action with the `enable-cache` option set to true, or manage the cache manually with the `actions/cache` action to restore and minimize the cache as needed [concepts__cache.md]."
+500w_k5,q34,True,False,False,True,True,True,1.927733199991053,4082,78,"The `pyproject.toml` file in a project using uv defines the project metadata, including the project's name, version, dependencies, Python version requirements, and build system. It is required for uv to identify the root directory of the project and is used to specify additional project configuration options. A minimal project definition includes at least a name and version [concepts__projects__layout.md]."
+500w_k5,q35,True,False,False,True,True,True,2.328952500014566,5130,99,"You can install executables from multiple packages using the `--with-executables-from` option. For example, you can specify additional packages whose executables should be installed alongside the main tool like this:
+
+```console
+$ uv tool install --with-executables-from <package1>,<package2> <tool-package>
+```
+
+This will install all executables from the specified packages into the same tool environment, making them available on the `PATH` [concepts__tools.md]."
+500w_k5,q36,True,False,False,True,True,True,2.475073599984171,4348,123,"You can provide dependency metadata for a package that does not declare it upfront by using the `tool.uv.dependency-metadata` table in your `pyproject.toml`. For example, you can include the metadata like this:
+
+```toml
+[[tool.uv.dependency-metadata]]
+name = ""package_name""
+version = ""package_version""
+requires-dist = [""dependency1"", ""dependency2""]
+```
+
+This allows uv to skip the build step and use the provided metadata instead, which is useful for packages that do not declare static metadata upfront or require disabling build isolation [concepts__resolution.md]."
+500w_k5,q37,True,False,False,True,True,True,2.160907199984649,3477,65,"The purpose of using a virtual environment when managing Python packages is to isolate packages from a Python installation's environment, which is considered best practice. This isolation helps avoid conflicts with packages managed by the operating system or other projects. Additionally, uv requires using a virtual environment by default to ensure this separation [pip__environments.md]."
+500w_k5,q38,True,False,False,True,True,True,3.6260650000185706,3332,112,"To upgrade a specific package in your tool environment, use the command: 
+
+```console
+$ uv tool upgrade <package-name>
+```
+
+For example, to upgrade the package `black`, you would run:
+
+```console
+$ uv tool upgrade black
+```
+
+You can also specify the `--upgrade-package` option to upgrade a specific package within a tool environment. For example:
+
+```console
+$ uv tool upgrade black --upgrade-package click
+```
+
+Tool upgrades will respect the version constraints provided when installing the tool. [concepts__tools.md]"
+500w_k5,q39,True,False,False,True,True,True,4.756513700005598,3878,265,"To publish a package using the uv package manager on GitHub, follow these steps:
+
+1. **Create a Release Workflow**: Add a release workflow to your project in `.github/workflows/release.yml` that triggers on version tags.
+
+2. **Define Jobs**: Set up two jobs in the workflow:
+   - **Build Job**: 
+     - Checkout the code.
+     - Install uv.
+     - Build the package using `uv build`.
+     - Optionally, run smoke tests on the built distributions.
+     - Upload the distributions as artifacts.
+   - **Publish Job**: 
+     - This job depends on the build job.
+     - Install uv again.
+     - Download the distributions artifact.
+     - Generate PEP 740 attestations (if needed).
+     - Publish the package using `uv publish`.
+
+3. **Configure Environment**: Create the environment defined in the workflow in the GitHub repository settings.
+
+4. **Add Trusted Publisher**: Add a Trusted Publisher to your PyPI project in the project settings under ""Publishing"".
+
+5. **Tag a Release**: Tag a release in your repository that starts with `v` and push the tags.
+
+These steps ensure that your package is built and published correctly to PyPI using GitHub Actions [guides__integration__github.md]."
+500w_k5,q40,True,False,False,False,True,True,4.719860000011977,4298,296,"To manage project dependencies using the uv package manager, you can define dependencies in several fields within your `pyproject.toml` file:
+
+1. **Published Dependencies**: Use the `project.dependencies` field for your main dependencies.
+2. **Optional Dependencies**: Use the `project.optional-dependencies` field for optional dependencies or ""extras"".
+3. **Local Development Dependencies**: Use `dependency-groups` for local development dependencies.
+4. **Alternative Sources**: Use `tool.uv.sources` for alternative sources during development.
+
+You can add dependencies using the command:
+```console
+$ uv add <dependency>
+```
+You can also specify flags like `--dev`, `--group`, or `--optional` to add dependencies to specific fields. To remove a dependency, use:
+```console
+$ uv remove <dependency>
+```
+To change an existing dependency, you can re-add it with new constraints. If you need to import dependencies from a `requirements.txt` file, use:
+```console
+$ uv add -r requirements.txt
+```
+For more complex scenarios, such as conflicting dependencies, you can declare conflicts explicitly in the `tool.uv` section of your `pyproject.toml` file. This allows uv to resolve dependencies correctly without conflicts. 
+
+Additionally, you can manage build dependencies separately if needed, using optional groups and the `uv sync` command to install and remove them as necessary [concepts__projects__dependencies.md]."
+500w_k5,h01,True,False,False,True,True,True,3.119399599992903,4028,138,"`uvx` is used to run tools without installing them, creating a temporary virtual environment for each invocation. In contrast, `uv tool install` installs the tool into a persistent environment, making its executables available on the `PATH` for repeated use without needing to invoke `uvx` each time. The temporary environments created by `uvx` are disposable, while the environments created by `uv tool install` remain until the tool is uninstalled. Additionally, `uvx` is more suitable for one-off executions, while `uv tool install` is better for tools that are frequently used or needed by other programs [concepts__tools.md][guides__tools.md]."
+500w_k5,h02,True,False,False,False,True,True,2.7340380000241566,5180,111,"You can install only the dependencies and skip your own project by using the `--no-install-project` option with the `uv sync` command. For example:
+
+```dockerfile
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-install-project
+```
+
+This approach allows you to cache the dependencies separately from your project, improving build times when the project changes frequently [guides__integration__docker.md]."
+500w_k5,h03,True,True,True,True,False,,0.14828789999592118,0,0,I don't know based on the documentation.
+500w_k5,h04,True,False,False,True,True,True,1.423015000007581,3528,44,"No, uv does not allow transparently upgrading across minor Python versions, such as from 3.12 to 3.13, because changing minor versions can affect dependency resolution [concepts__python-versions.md]."
+500w_k5,h05,True,False,False,True,True,True,1.6627737999951933,4549,38,You should place the `uv.toml` file in the `%APPDATA%\uv\` directory on Windows to apply it to all your projects. [concepts__configuration-files.md]
+500w_k5,h06,True,False,False,True,True,True,2.8641745999921113,4638,131,"To install a dependency straight from a GitHub tag with uv, you can use the following command:
+
+```console
+$ uv add git+https://github.com/encode/httpx --tag 0.27.0
+```
+
+This will add the dependency to your project with the specified tag. The corresponding entry in your `pyproject.toml` will look like this:
+
+```toml
+[project]
+dependencies = [""httpx""]
+[tool.uv.sources]
+httpx = { git = ""https://github.com/encode/httpx"", tag = ""0.27.0"" }
+``` [concepts__projects__dependencies.md]"
+500w_k5,h07,True,False,False,True,True,True,1.092551600013394,4191,31,"No, uv does not support the `--user` flag. Instead, it recommends using virtual environments to isolate package installations [pip__compatibility.md]."
+500w_k5,q41,False,True,True,,,,0.16197630000533536,0,0,I don't know based on the documentation.
+500w_k5,q42,False,True,False,,,,2.3336308999860194,4816,8,I don't know based on the documentation.
+500w_k5,q43,False,True,False,,,,1.047128000005614,4387,8,I don't know based on the documentation.
+500w_k5,q44,False,True,False,,,,1.0853913000028115,5198,8,I don't know based on the documentation.
+500w_k5,q45,False,True,False,,,,0.911254500009818,4237,8,I don't know based on the documentation.
+500w_k5,q46,False,True,False,,,,1.1003059000067879,3813,8,I don't know based on the documentation.
+500w_k5,q47,False,True,True,,,,0.15200950001599267,0,0,I don't know based on the documentation.
+500w_k5,q48,False,True,True,,,,0.16540359999635257,0,0,I don't know based on the documentation.
