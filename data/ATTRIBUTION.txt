@@ -1,0 +1,2 @@
+These files are copied from the uv documentation (https://github.com/astral-sh/uv/tree/main/docs),
+published by Astral under the MIT and Apache-2.0 licenses.
