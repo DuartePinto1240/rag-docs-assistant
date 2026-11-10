@@ -23,7 +23,7 @@ def build_context(chunks: list[dict]) -> str:
     return "\n\n---\n\n".join(parts)
 
 
-def answer(question: str, k: int = 4) -> dict:
+def answer(question: str, k: int = 5) -> dict:
     chunks = retrieve(question, k=k)
     relevant = [c for c in chunks if c["distance"] <= MAX_DISTANCE]
 

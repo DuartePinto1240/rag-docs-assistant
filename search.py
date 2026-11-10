@@ -10,7 +10,7 @@ client = OpenAI()
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 db = chromadb.PersistentClient(path="chroma_db")
-collection = db.get_collection("uv_docs")
+collection = db.get_collection("uv_docs_150")
 
 
 def retrieve(question: str, k: int = 4) -> list[dict]:

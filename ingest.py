@@ -23,10 +23,10 @@ if __name__ == "__main__":
     db = chromadb.PersistentClient(path="chroma_db")
     # apaga a coleção antiga (se existir) para poder re-executar sem duplicados
     try:
-        db.delete_collection("uv_docs")
+        db.delete_collection("uv_docs_150")
     except Exception:
         pass
-    collection = db.create_collection("uv_docs", metadata={"hnsw:space": "cosine"})
+    collection = db.create_collection("uv_docs_150", metadata={"hnsw:space": "cosine"})
 
     for i in range(0, len(chunks), BATCH_SIZE):
         batch = chunks[i:i + BATCH_SIZE]

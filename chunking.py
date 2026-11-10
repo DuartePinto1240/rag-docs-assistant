@@ -3,7 +3,7 @@ from pathlib import Path
 DATA_DIR = Path("data")
 
 
-def split_into_chunks(text: str, max_words: int = 300, overlap: int = 50) -> list[str]:
+def split_into_chunks(text: str, max_words: int = 150, overlap: int = 25) -> list[str]:
     """Divide o texto em chunks de ~max_words palavras, com sobreposição."""
     words = text.split()
     chunks = []
@@ -16,7 +16,7 @@ def split_into_chunks(text: str, max_words: int = 300, overlap: int = 50) -> lis
     return chunks
 
 
-def load_chunks(max_words: int = 300, overlap: int = 50) -> list[dict]:
+def load_chunks(max_words: int = 150, overlap: int = 25) -> list[dict]:
     """Lê todos os .md de data/ e devolve uma lista de chunks com metadados."""
     all_chunks = []
     for path in sorted(DATA_DIR.glob("*.md")):
