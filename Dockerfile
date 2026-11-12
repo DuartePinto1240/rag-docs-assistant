@@ -10,7 +10,7 @@ WORKDIR /home/user/app
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=user chunking.py ingest.py search.py rag.py bootstrap.py app.py ./
+COPY --chown=user chunking.py ingest.py search.py rag.py bootstrap.py app.py logging_setup.py ./
 COPY --chown=user data/ data/
 
 EXPOSE 7860

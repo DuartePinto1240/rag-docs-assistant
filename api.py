@@ -3,6 +3,9 @@ from openai import OpenAIError
 from pydantic import BaseModel, Field
 
 from rag import answer
+from logging_setup import setup_logging
+
+setup_logging()
 
 app = FastAPI(
     title="uv docs assistant",

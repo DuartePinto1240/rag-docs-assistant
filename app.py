@@ -1,6 +1,10 @@
 import streamlit as st
+
 import bootstrap  # constrói o índice na primeira execução, se não existir
+from logging_setup import setup_logging
 from rag import answer
+
+setup_logging()
 
 st.set_page_config(page_title="uv docs assistant", page_icon="📚")
 
